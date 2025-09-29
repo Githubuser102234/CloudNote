@@ -34,8 +34,16 @@
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <!-- Auth Modal/Overlay (Always visible until authenticated, controlled by routing) -->
-    <div id="auth-overlay" class="fixed inset-0 bg-white flex items-center justify-center z-[200]">
+    <!-- *** 1. Loading Spinner Overlay *** -->
+    <div id="loading-spinner-overlay" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-[300]">
+        <div class="flex flex-col items-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-t-indigo-500 border-gray-200 mb-3"></div>
+            <p class="text-indigo-600 font-medium">Loading Application...</p>
+        </div>
+    </div>
+    
+    <!-- *** 2. Auth Modal/Overlay (Controlled by routing) *** -->
+    <div id="auth-overlay" class="fixed inset-0 bg-white flex items-center justify-center z-[200] hidden">
         <div class="bg-white p-6 md:p-10 rounded-xl shadow-2xl w-11/12 max-w-sm transform transition-all duration-300 border border-gray-100">
             <h3 id="auth-title" class="text-3xl font-bold text-gray-900 mb-6 text-center">Sign In</h3>
             
@@ -77,7 +85,7 @@
         </div>
     </div>
     
-    <!-- Main Application Container (Hidden until authenticated) -->
+    <!-- *** 3. Main Application Container (Hidden until authenticated) *** -->
     <div id="app" class="flex flex-1 overflow-hidden h-screen hidden">
         
         <!-- Note List (Sidebar on desktop, full-screen on mobile when no note is selected) -->
@@ -166,22 +174,26 @@
             appId: "1:744575504537:web:2b76ec5ca81faca23a6808",
             measurementId: "G-LQY0X53JGF"
         };
-        // Use environment variable if available, otherwise use provided config
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : PROVIDED_FIREBASE_CONFIG;
         const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId;
 
+        // Global Firebase Instances
+        let firebaseApp = null;
         let db = null;
         let auth = null;
+        let googleProvider = null; // New global variable for Google Provider
+
         let userId = null;
         let isAuthReady = false; // Indicates if auth listener has completed its first check
 
         let notesData = [];
         let activeNoteId = null;
         let saveTimer = null;
-        let authMode = 'signin'; // 'signin', 'signup', 'reset'
-        let unsubscribeNotes = null; // To hold the onSnapshot unsubscriber
+        let authMode = 'signin';
+        let unsubscribeNotes = null;
 
         // --- DOM Elements ---
+        const loadingSpinnerOverlay = document.getElementById('loading-spinner-overlay');
         const appContainer = document.getElementById('app');
         const authOverlay = document.getElementById('auth-overlay');
         const userIdDisplay = document.getElementById('user-id-display');
@@ -195,8 +207,9 @@
         const emptyEditorState = document.getElementById('empty-editor-state');
         const backToListBtn = document.getElementById('back-to-list-btn');
         const signoutBtn = document.getElementById('signout-btn');
-
         const modalOverlay = document.getElementById('modal-overlay');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
         // Auth Form Elements
         const authTitle = document.getElementById('auth-title');
@@ -212,13 +225,17 @@
         // --- FIREBASE INITIALIZATION & AUTH ---
 
         const initializeFirebase = () => {
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
+            // Initialize Core App, Auth, and Firestore
+            firebaseApp = initializeApp(firebaseConfig);
+            db = getFirestore(firebaseApp);
+            auth = getAuth(firebaseApp);
+            googleProvider = new GoogleAuthProvider(); // Instantiate the provider
 
             // Listen for Auth State Changes
             onAuthStateChanged(auth, (user) => {
                 isAuthReady = true; // Auth check is done
+                loadingSpinnerOverlay.classList.add('hidden'); // Hide loading spinner
+
                 if (user) {
                     userId = user.uid;
                     userIdDisplay.textContent = userId;
@@ -227,15 +244,15 @@
                     authOverlay.classList.add('hidden');
                     appContainer.classList.remove('hidden');
 
-                    // If user is authenticated, handle the routing for notes
+                    // Start listening for notes and handle the current route
                     startNoteListener();
                     handleRouting();
-                    console.log("User signed in with UID:", userId);
+                    
                 } else {
                     // User is signed out.
                     userId = null;
                     notesData = [];
-                    setActiveNote(null, false); // Clear UI
+                    setActiveNote(null, false);
 
                     // Stop listening to old notes
                     if (unsubscribeNotes) {
@@ -243,8 +260,10 @@
                         unsubscribeNotes = null;
                     }
 
-                    // Force routing to auth screen and show overlay
-                    window.location.hash = '#/signin';
+                    // Force routing to signin/signup screen and show overlay
+                    if (!window.location.hash.startsWith('#/signup') && !window.location.hash.startsWith('#/reset')) {
+                        window.location.hash = '#/signin';
+                    }
                     authOverlay.classList.remove('hidden');
                     appContainer.classList.add('hidden');
                     handleRouting(); 
@@ -257,21 +276,22 @@
         const handleRouting = () => {
             let hash = window.location.hash || '#/';
             
-            // If authenticated, we ignore auth-only routes for display purposes
+            // Only proceed if Auth is ready
+            if (!isAuthReady) return;
+            
             if (userId) {
-                // Main App Routes
+                // AUTHENTICATED ROUTES
+                authOverlay.classList.add('hidden');
+                
                 if (hash.startsWith('#/notes/')) {
                     const noteId = hash.substring(8);
-                    setActiveNote(noteId, true);
+                    setActiveNote(noteId, false); // Do not force re-route
                 } else {
-                    // Default to showing the note list if hash is invalid or just #/
-                    setActiveNote(null, true);
+                    setActiveNote(null, false); // Show list view
                 }
-                // Hide auth UI regardless of hash
-                authOverlay.classList.add('hidden');
 
             } else {
-                // Auth Routes (Not authenticated)
+                // UNAUTHENTICATED ROUTES
                 authOverlay.classList.remove('hidden');
                 appContainer.classList.add('hidden');
 
@@ -298,6 +318,8 @@
             authPasswordInput.classList.remove('hidden');
             authGoogleBtn.classList.remove('hidden');
             authResetLink.classList.remove('hidden');
+            
+            // Clear input values when switching mode for a cleaner experience
             authEmailInput.value = '';
             authPasswordInput.value = '';
 
@@ -350,7 +372,7 @@
                     await createUserWithEmailAndPassword(auth, email, password);
                 } else if (authMode === 'reset') {
                     await sendPasswordResetEmail(auth, email);
-                    window.location.hash = '#/signin';
+                    window.location.hash = '#/signin'; // Route back to signin after sending
                     setAuthMessage("Password reset email sent. Check your inbox!", false);
                 }
                 
@@ -369,11 +391,19 @@
         };
 
         const handleGoogleSignIn = async () => {
+            // Check that auth and provider are initialized (Fix for "null is not an object")
+            if (!auth || !googleProvider) {
+                setAuthMessage("Authentication service is not fully initialized. Please wait.", true);
+                return;
+            }
             try {
-                const provider = new GoogleAuthProvider();
-                await signInWithPopup(auth, provider);
+                authGoogleBtn.disabled = true;
+                await signInWithPopup(auth, googleProvider);
             } catch (error) {
+                console.error("Google Sign In Error:", error);
                 setAuthMessage("Google Sign In Failed: " + (error.message || 'Unknown Error'));
+            } finally {
+                 authGoogleBtn.disabled = false;
             }
         };
 
@@ -393,7 +423,6 @@
             if (!db || !userId) return null;
             // Private Data Path: /artifacts/{appId}/users/{userId}/notes
             const path = `artifacts/${appId}/users/${userId}/notes`;
-            console.log("Firestore Path:", path); // Debug path
             return collection(db, path);
         };
 
@@ -416,20 +445,20 @@
                     updatedAt: doc.data().updatedAt?.toDate() || new Date(0)
                 }));
 
-                notesData = newNotes.sort((a, b) => b.updatedAt - a.updatedAt);
+                notesData = newNotes.sort((a, b) => b.updatedAt - a.curated);
                 renderNoteList();
 
-                // If the active note was deleted, clear the editor and route back
+                // If the active note was deleted by another client/process, redirect to list
                 if (activeNoteId && !notesData.find(note => note.id === activeNoteId)) {
                     window.location.hash = '#/';
                 }
             }, (error) => {
-                console.error("Error listening to notes (Check your security rules!):", error);
+                console.error("Error listening to notes:", error);
             });
         };
 
         const createNewNote = async () => {
-            if (!isAuthReady || !userId) return;
+            if (!userId) return;
 
             const notesRef = getNotesCollectionRef();
             if (!notesRef) return;
@@ -445,7 +474,6 @@
                 window.location.hash = `#/notes/${docRef.id}`;
             } catch (error) {
                 console.error("Error creating new note:", error);
-                // Often a permission denied error if rules are wrong
             }
         };
 
@@ -502,6 +530,9 @@
 
         const renderNoteList = () => {
             notesListElement.innerHTML = '';
+            // Ensure data is sorted by updatedAt, newest first
+            notesData.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+
             notesData.forEach(note => {
                 const isActive = note.id === activeNoteId;
                 const noteItem = document.createElement('a');
@@ -512,20 +543,13 @@
                     <p class="text-xs text-gray-500 mb-1">${formatTimestamp(note.updatedAt)}</p>
                     <p class="text-sm text-gray-600 line-clamp-2">${note.content?.substring(0, 100) || 'Empty note...'}</p>
                 `;
-                // Note: The click is handled by the hash change via the <a> tag
                 notesListElement.appendChild(noteItem);
             });
         };
 
-        const setActiveNote = (noteId, shouldRoute = false) => {
+        const setActiveNote = (noteId) => {
             activeNoteId = noteId;
             const activeNote = notesData.find(note => note.id === noteId);
-
-            // Update URL hash if needed (e.g., when clicking New Note)
-            if (shouldRoute && noteId && window.location.hash !== `#/notes/${noteId}`) {
-                window.location.hash = `#/notes/${noteId}`;
-                return; // Routing will trigger handleRouting which calls setActiveNote again
-            }
 
             const isMobile = window.innerWidth < 768;
 
@@ -552,13 +576,15 @@
                 lastEditedTimeSpan.textContent = 'Last edited: --';
                 deleteNoteBtn.classList.add('opacity-50', 'pointer-events-none');
 
-                // On desktop, show empty state. On mobile, show list.
+                // Determine what to show when no note is active
                 if (window.innerWidth >= 768) {
+                    // Desktop: Show list and empty editor state
                     document.getElementById('note-list-container').classList.remove('hidden');
                     noteEditorContainer.classList.add('hidden');
                     noteEditorContainer.classList.remove('flex');
                     emptyEditorState.classList.remove('hidden');
                 } else {
+                    // Mobile: Show list only
                     document.getElementById('note-list-container').classList.remove('hidden');
                     noteEditorContainer.classList.add('hidden');
                     noteEditorContainer.classList.remove('flex');
@@ -637,7 +663,6 @@
 
             // Handle window resize for responsive layout
             window.addEventListener('resize', () => {
-                // Reruns the visibility logic based on current screen size and activeNoteId
                 setActiveNote(activeNoteId); 
             });
         };
@@ -646,6 +671,11 @@
         // --- APPLICATION START ---
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Check initial hash on load
+            if (!window.location.hash) {
+                window.location.hash = '#/';
+            }
+            
             lucide.createIcons();
             setupEventListeners();
             initializeFirebase();

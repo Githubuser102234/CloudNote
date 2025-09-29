@@ -102,6 +102,14 @@
                 </div>
             </div>
 
+            <!-- Search Input -->
+            <div class="p-4 border-b border-gray-100">
+                 <div class="relative">
+                    <i data-lucide="search" class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input id="search-input" type="text" placeholder="Search notes..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-700">
+                </div>
+            </div>
+
             <div id="notes-list" class="notes-list flex-1 overflow-y-auto p-2">
                 <!-- Notes will be injected here -->
             </div>
@@ -119,6 +127,8 @@
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                 </button>
                 <div class="flex items-center space-x-3 ml-auto">
+                    <!-- Saving Status Indicator -->
+                    <span id="save-status-span" class="text-xs font-medium text-gray-400">Saved</span>
                     <span id="last-edited-time" class="text-xs text-gray-500">Last edited: --</span>
                     <button id="delete-note-btn" title="Delete Note" class="p-2 text-red-500 rounded-lg hover:bg-red-50 transition duration-150 active:scale-95">
                         <i data-lucide="trash-2" class="w-5 h-5"></i>
@@ -164,7 +174,7 @@
         // Set Firebase Log Level
         setLogLevel('Debug');
 
-        // Provided Firebase Configuration
+        // Provided Firebase Configuration (using mock config structure)
         const PROVIDED_FIREBASE_CONFIG = {
             apiKey: "AIzaSyBqObkmL_fZeeAoaS4weJGx7VU4CskppuQ",
             authDomain: "cloudnote-be55c.firebaseapp.com",
@@ -177,20 +187,25 @@
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : PROVIDED_FIREBASE_CONFIG;
         const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId;
 
-        // Global Firebase Instances
+        // Global Firebase Instances and State
         let firebaseApp = null;
         let db = null;
         let auth = null;
-        let googleProvider = null; // New global variable for Google Provider
+        let googleProvider = null;
 
         let userId = null;
-        let isAuthReady = false; // Indicates if auth listener has completed its first check
+        let isAuthReady = false; 
 
         let notesData = [];
         let activeNoteId = null;
         let saveTimer = null;
         let authMode = 'signin';
         let unsubscribeNotes = null;
+        
+        // New State Variables
+        let searchTerm = ''; // For filtering the notes list
+        let saveStatus = 'Saved'; // 'Typing...', 'Saving...', 'Saved'
+
 
         // --- DOM Elements ---
         const loadingSpinnerOverlay = document.getElementById('loading-spinner-overlay');
@@ -210,6 +225,8 @@
         const modalOverlay = document.getElementById('modal-overlay');
         const modalCancelBtn = document.getElementById('modal-cancel-btn');
         const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+        const searchInput = document.getElementById('search-input'); // New
+        const saveStatusSpan = document.getElementById('save-status-span'); // New
 
         // Auth Form Elements
         const authTitle = document.getElementById('auth-title');
@@ -225,43 +242,39 @@
         // --- FIREBASE INITIALIZATION & AUTH ---
 
         const initializeFirebase = () => {
-            // Initialize Core App, Auth, and Firestore
             firebaseApp = initializeApp(firebaseConfig);
             db = getFirestore(firebaseApp);
             auth = getAuth(firebaseApp);
-            googleProvider = new GoogleAuthProvider(); // Instantiate the provider
+            googleProvider = new GoogleAuthProvider();
 
             // Listen for Auth State Changes
             onAuthStateChanged(auth, (user) => {
-                isAuthReady = true; // Auth check is done
+                isAuthReady = true; 
                 loadingSpinnerOverlay.classList.add('hidden'); // Hide loading spinner
 
                 if (user) {
                     userId = user.uid;
                     userIdDisplay.textContent = userId;
                     
-                    // Show app, hide auth
                     authOverlay.classList.add('hidden');
                     appContainer.classList.remove('hidden');
 
-                    // Start listening for notes and handle the current route
                     startNoteListener();
                     handleRouting();
                     
                 } else {
-                    // User is signed out.
                     userId = null;
                     notesData = [];
-                    setActiveNote(null, false);
+                    setActiveNote(null); // Clear UI
 
-                    // Stop listening to old notes
                     if (unsubscribeNotes) {
                         unsubscribeNotes();
                         unsubscribeNotes = null;
                     }
 
-                    // Force routing to signin/signup screen and show overlay
-                    if (!window.location.hash.startsWith('#/signup') && !window.location.hash.startsWith('#/reset')) {
+                    // Ensure we are routed to an auth path
+                    if (!window.location.hash.startsWith('#/signup') && 
+                        !window.location.hash.startsWith('#/reset')) {
                         window.location.hash = '#/signin';
                     }
                     authOverlay.classList.remove('hidden');
@@ -275,8 +288,8 @@
 
         const handleRouting = () => {
             let hash = window.location.hash || '#/';
+            document.title = "Secure Cloud Notes"; // Reset title by default
             
-            // Only proceed if Auth is ready
             if (!isAuthReady) return;
             
             if (userId) {
@@ -285,9 +298,9 @@
                 
                 if (hash.startsWith('#/notes/')) {
                     const noteId = hash.substring(8);
-                    setActiveNote(noteId, false); // Do not force re-route
+                    setActiveNote(noteId); 
                 } else {
-                    setActiveNote(null, false); // Show list view
+                    setActiveNote(null); 
                 }
 
             } else {
@@ -300,7 +313,6 @@
                 } else if (hash === '#/reset') {
                     setAuthMode('reset');
                 } else {
-                    // Default to signin if not recognized
                     setAuthMode('signin');
                 }
             }
@@ -313,13 +325,13 @@
         };
 
         const setAuthMode = (mode) => {
+            // ... (Auth mode switching logic remains the same)
             authMode = mode;
             authMessage.classList.add('hidden');
             authPasswordInput.classList.remove('hidden');
             authGoogleBtn.classList.remove('hidden');
             authResetLink.classList.remove('hidden');
             
-            // Clear input values when switching mode for a cleaner experience
             authEmailInput.value = '';
             authPasswordInput.value = '';
 
@@ -350,6 +362,7 @@
         };
 
         const handlePrimaryAuthAction = async () => {
+            // ... (Auth action logic remains the same)
             const email = authEmailInput.value;
             const password = authPasswordInput.value;
 
@@ -372,7 +385,7 @@
                     await createUserWithEmailAndPassword(auth, email, password);
                 } else if (authMode === 'reset') {
                     await sendPasswordResetEmail(auth, email);
-                    window.location.hash = '#/signin'; // Route back to signin after sending
+                    window.location.hash = '#/signin';
                     setAuthMessage("Password reset email sent. Check your inbox!", false);
                 }
                 
@@ -391,7 +404,6 @@
         };
 
         const handleGoogleSignIn = async () => {
-            // Check that auth and provider are initialized (Fix for "null is not an object")
             if (!auth || !googleProvider) {
                 setAuthMessage("Authentication service is not fully initialized. Please wait.", true);
                 return;
@@ -410,7 +422,6 @@
         const handleSignOut = async () => {
             try {
                 await signOut(auth);
-                // The onAuthStateChanged listener handles the UI cleanup and routing
             } catch (error) {
                 console.error("Sign out error:", error);
             }
@@ -431,7 +442,6 @@
             const notesRef = getNotesCollectionRef();
             if (!notesRef) return;
             
-            // If already subscribed, unsubscribe first
             if (unsubscribeNotes) {
                 unsubscribeNotes();
             }
@@ -442,10 +452,11 @@
                 const newNotes = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data(),
+                    // Ensure updatedAt is a Date object for consistent sorting
                     updatedAt: doc.data().updatedAt?.toDate() || new Date(0)
                 }));
 
-                notesData = newNotes.sort((a, b) => b.updatedAt - a.curated);
+                notesData = newNotes; // Filtering/Sorting handled in renderNoteList
                 renderNoteList();
 
                 // If the active note was deleted by another client/process, redirect to list
@@ -470,11 +481,30 @@
                     updatedAt: serverTimestamp()
                 };
                 const docRef = await addDoc(notesRef, newNote);
-                // Route to the new note immediately
                 window.location.hash = `#/notes/${docRef.id}`;
             } catch (error) {
                 console.error("Error creating new note:", error);
             }
+        };
+
+        const setSaveStatus = (status) => {
+            saveStatus = status;
+            let text = status;
+            let color = 'text-gray-400';
+
+            if (status === 'Typing...') {
+                text = 'Typing...';
+                color = 'text-gray-500';
+            } else if (status === 'Saving...') {
+                text = 'Saving...';
+                color = 'text-indigo-500';
+            } else if (status === 'Saved') {
+                text = 'Saved';
+                color = 'text-green-600';
+            }
+            
+            saveStatusSpan.textContent = text;
+            saveStatusSpan.className = `text-xs font-medium ${color}`;
         };
 
         const saveActiveNote = async (title, content) => {
@@ -484,14 +514,17 @@
             if (!notesRef) return;
 
             try {
+                setSaveStatus('Saving...');
                 const noteDocRef = doc(notesRef, activeNoteId);
                 await updateDoc(noteDocRef, {
                     title: title || '(No Title)',
                     content: content,
                     updatedAt: serverTimestamp()
                 });
+                setSaveStatus('Saved');
             } catch (error) {
                 console.error("Error saving note:", error);
+                setSaveStatus('Error!');
             }
         };
 
@@ -504,7 +537,7 @@
             try {
                 const noteDocRef = doc(notesRef, activeNoteId);
                 await deleteDoc(noteDocRef);
-                window.location.hash = '#/'; // Route back to the list
+                window.location.hash = '#/';
             } catch (error) {
                 console.error("Error deleting note:", error);
             }
@@ -529,11 +562,30 @@
         };
 
         const renderNoteList = () => {
-            notesListElement.innerHTML = '';
-            // Ensure data is sorted by updatedAt, newest first
-            notesData.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+            // 1. Filtering logic
+            const term = searchTerm.toLowerCase();
+            const filteredNotes = notesData.filter(note => {
+                if (!term) return true;
+                const titleMatch = note.title?.toLowerCase().includes(term);
+                const contentMatch = note.content?.toLowerCase().includes(term);
+                return titleMatch || contentMatch;
+            });
+            
+            // 2. Sorting (by updatedAt, newest first)
+            filteredNotes.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
 
-            notesData.forEach(note => {
+            notesListElement.innerHTML = '';
+            
+            if (filteredNotes.length === 0 && searchTerm) {
+                notesListElement.innerHTML = `<p class="p-4 text-center text-gray-400">No notes found matching "${searchTerm}".</p>`;
+                return;
+            } else if (filteredNotes.length === 0 && !searchTerm) {
+                 notesListElement.innerHTML = `<p class="p-4 text-center text-gray-400">Create your first note by clicking the '+' button!</p>`;
+                 return;
+            }
+
+            // 3. Render
+            filteredNotes.forEach(note => {
                 const isActive = note.id === activeNoteId;
                 const noteItem = document.createElement('a');
                 noteItem.href = `#/notes/${note.id}`;
@@ -554,6 +606,9 @@
             const isMobile = window.innerWidth < 768;
 
             if (activeNote) {
+                // Set page title
+                document.title = (activeNote.title || 'Untitled') + ' | Notes';
+
                 // Show Editor, Hide Empty State
                 noteEditorContainer.classList.remove('hidden');
                 noteEditorContainer.classList.add('flex');
@@ -569,27 +624,33 @@
                 noteContentTextarea.value = activeNote.content || '';
                 lastEditedTimeSpan.textContent = 'Last edited: ' + formatTimestamp(activeNote.updatedAt);
                 deleteNoteBtn.classList.remove('opacity-50', 'pointer-events-none');
+                setSaveStatus('Saved'); // Reset status on load
+
+                // Auto-focus the title input
+                noteTitleInput.focus();
+
             } else {
                 // Clear and hide editor
                 noteTitleInput.value = '';
                 noteContentTextarea.value = '';
                 lastEditedTimeSpan.textContent = 'Last edited: --';
                 deleteNoteBtn.classList.add('opacity-50', 'pointer-events-none');
+                setSaveStatus(''); // Clear status
 
-                // Determine what to show when no note is active
+                // On desktop, show empty state. On mobile, show list.
                 if (window.innerWidth >= 768) {
-                    // Desktop: Show list and empty editor state
                     document.getElementById('note-list-container').classList.remove('hidden');
                     noteEditorContainer.classList.add('hidden');
                     noteEditorContainer.classList.remove('flex');
                     emptyEditorState.classList.remove('hidden');
                 } else {
-                    // Mobile: Show list only
+                    // Mobile - ensure list is visible if no note is selected
                     document.getElementById('note-list-container').classList.remove('hidden');
                     noteEditorContainer.classList.add('hidden');
                     noteEditorContainer.classList.remove('flex');
                     emptyEditorState.classList.add('hidden');
                 }
+                document.title = "Secure Cloud Notes";
             }
 
             renderNoteList();
@@ -618,12 +679,21 @@
             signoutBtn.addEventListener('click', handleSignOut);
             newNoteBtn.addEventListener('click', createNewNote);
 
+            // Search input handler
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value.trim();
+                renderNoteList();
+            });
+
+
             // Auto-save logic with debounce
             const handleInputChange = () => {
                 if (!activeNoteId || !userId) return;
 
                 const title = noteTitleInput.value;
                 const content = noteContentTextarea.value;
+
+                setSaveStatus('Typing...');
                 
                 if (saveTimer) {
                     clearTimeout(saveTimer);
@@ -671,7 +741,7 @@
         // --- APPLICATION START ---
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Check initial hash on load
+            // Set initial hash to root if none exists to trigger proper routing
             if (!window.location.hash) {
                 window.location.hash = '#/';
             }

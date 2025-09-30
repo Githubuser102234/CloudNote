@@ -17,94 +17,129 @@
         body {
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- Dark Mode Colors (FIXED & REVAMPED) --- */
+        /* --- Dark Mode Colors FIXES --- */
         body.dark {
-            background-color: #030712; /* A deeper, consistent background */
-            color: #e5e7eb; /* gray-200 */
+            background-color: #0d1117; /* Even darker background (GitHub dark theme style) */
+            color: #c9d1d9; /* Light gray text */
         }
 
-        /* Sidebar, Shared Viewer, Auth Card BG */
-        body.dark #note-list-container, 
-        body.dark #auth-overlay > div, 
-        body.dark #shared-viewer-container,
-        body.dark #empty-editor-state {
-            background-color: #111827; /* gray-900 */
-            border-color: #374151;
-            color: #f3f4f6;
+        body.dark #note-list-container, body.dark #auth-overlay > div, body.dark #shared-viewer-container {
+            background-color: #161b22; /* Darker container background */
+            border-color: #30363d; /* Dark border */
+            color: #c9d1d9;
         }
         
-        /* Editor Header and main Editor BG */
-        body.dark .border-gray-200 { border-color: #1f2937 !important; }
-        body.dark .bg-gray-50 { 
-            background-color: #1f2937 !important; /* gray-800 */
-            border-color: #1f2937 !important;
-        }
-        body.dark #editor-body { 
-            background-color: #1f2937 !important;
+        body.dark #auth-overlay {
+            background-color: #0d1117;
         }
 
-        /* Text Colors & Placeholders */
-        body.dark .text-gray-900, body.dark .text-gray-800 { color: #f3f4f6 !important; }
-        body.dark .text-gray-700 { color: #d1d5db !important; }
-        body.dark .text-gray-600 { color: #9ca3af !important; }
-        body.dark .text-gray-500 { color: #6b7280 !important; }
-        
-        /* Inputs and Textareas */
-        body.dark input, 
-        body.dark textarea {
-            background-color: transparent !important; /* Match parent container */
-            border-color: transparent !important;
-            color: #f3f4f6 !important;
+        /* Note list item default state */
+        body.dark .notes-list a:not(.active), body.dark #empty-editor-state {
+            background-color: #161b22;
         }
-        body.dark input::placeholder, 
-        body.dark textarea::placeholder {
-            color: #6b7280 !important;
+        
+        body.dark .notes-list a:not(.active):hover {
+            background-color: #30363d; /* Dark hover */
+        }
+
+        /* Active note contrast FIX */
+        body.dark .notes-list a.active {
+            background-color: #4f46e520; /* indigo-600 with opacity */
+            box-shadow: 0 0 0 2px #4f46e5;
+        }
+        body.dark .notes-list a.active h3 {
+             color: #c7d2fe; /* indigo-200 */
+        }
+        body.dark .notes-list a.active p {
+             color: #9ca3af; /* gray-400 */
+        }
+
+        /* General element color overrides for dark mode */
+        body.dark .border-gray-200 { border-color: #30363d; }
+        body.dark .bg-gray-50 { background-color: #161b22; }
+        body.dark .text-gray-900 { color: #f3f4f6; }
+        body.dark .text-gray-700 { color: #c9d1d9; }
+        body.dark .text-gray-600 { color: #9ca3af; }
+        body.dark .text-gray-500 { color: #6b7280; }
+        body.dark .text-gray-400 { color: #4b5563; }
+        
+        /* Input & Textarea FIX: Ensure full override */
+        body.dark input, body.dark textarea {
+            background-color: #161b22 !important; 
+            border-color: #30363d !important; 
+            color: #f3f4f6 !important; 
+        }
+        body.dark input::placeholder, body.dark textarea::placeholder {
+            color: #6b7280; /* gray-500 */
         }
         body.dark input:focus, body.dark textarea:focus {
-             box-shadow: none !important;
-        }
-
-        /* Note List Items */
-        body.dark .notes-list a:not(.active) {
-            background-color: #111827;
-        }
-        body.dark .notes-list a:not(.active):hover {
-            background-color: #1f2937;
-        }
-        body.dark .notes-list a.active {
-            background-color: #4f46e530; /* indigo-600 with opacity */
-            color: #e0e7ff; /* light indigo */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            border-radius: 0.75rem; /* rounded-xl */
+            background-color: #161b22 !important;
         }
         
-        /* Markdown Preview */
-        body.dark .markdown-viewer {
-             color: #e5e7eb;
-        }
+        /* Dark mode markdown styling */
         body.dark .markdown-viewer pre {
-            background-color: #030712; 
-            border: 1px solid #1f2937;
+            background-color: #0d1117; /* gray-900 */
+            border: 1px solid #30363d;
         }
         body.dark .markdown-viewer code {
-            background-color: #1f2937;
-            color: #f3f4f6;
+            background-color: #30363d;
+            color: #c9d1d9;
         }
         
+        /* Modal Fixes */
+        body.dark #modal-overlay > div, body.dark #share-modal-overlay > div {
+            background-color: #161b22; 
+            color: #f3f4f6;
+        }
+        body.dark #modal-title, body.dark #share-modal-overlay h3 {
+             color: #f3f4f6;
+        }
+        body.dark #share-url-input {
+            background-color: #30363d !important;
+            border-color: #4b5563 !important;
+            color: #f3f4f6 !important;
+        }
+        
+        /* Tag Pill Styling FIX (New) */
+        .tag-pill {
+            display: inline-flex;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 9999px;
+            font-weight: 500;
+            margin-right: 4px;
+            background-color: #e0e7ff; /* light: indigo-100 */
+            color: #4f46e5; /* light: indigo-600 */
+        }
+        body.dark .tag-pill {
+            background-color: #374151; /* dark: gray-700 */
+            color: #c7d2fe; /* dark: indigo-200 */
+        }
+
         /* Custom scrollbar for better aesthetics */
         .notes-list::-webkit-scrollbar, .editor-content::-webkit-scrollbar, .markdown-viewer::-webkit-scrollbar {
             width: 6px;
         }
+
         .notes-list::-webkit-scrollbar-thumb, .editor-content::-webkit-scrollbar-thumb, .markdown-viewer::-webkit-scrollbar-thumb {
             background: #d1d5db;
             border-radius: 3px;
         }
+
+        .notes-list::-webkit-scrollbar-thumb:hover, .editor-content::-webkit-scrollbar-thumb:hover, .markdown-viewer::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
         body.dark .notes-list::-webkit-scrollbar-thumb, body.dark .editor-content::-webkit-scrollbar-thumb, body.dark .markdown-viewer::-webkit-scrollbar-thumb {
             background: #4b5563;
         }
+        
+        body.dark .notes-list::-webkit-scrollbar-thumb:hover, body.dark .editor-content::-webkit-scrollbar-thumb:hover, body.dark .markdown-viewer::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
         
         /* Markdown Styling - Ensure good readability */
         .markdown-viewer {
@@ -119,6 +154,7 @@
             margin-bottom: 1em;
         }
         .markdown-viewer pre {
+            background-color: #f3f4f6;
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
@@ -126,15 +162,20 @@
         }
         .markdown-viewer code {
             font-family: monospace;
+            background-color: #f0f0f0;
             padding: 2px 4px;
             border-radius: 4px;
         }
         
+        /* Ensure editor content takes full available height */
+        #note-content {
+            min-height: calc(100% - 150px); /* Adjust based on title/tag input height */
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <!-- *** 1. Loading Spinner Overlay (Always visible initially) *** -->
+    <!-- *** 1. Loading Spinner Overlay *** -->
     <div id="loading-spinner-overlay" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-[300]">
         <div class="flex flex-col items-center">
             <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-t-indigo-500 border-gray-200 mb-3"></div>
@@ -142,15 +183,16 @@
         </div>
     </div>
 
-    <!-- *** 2. Auth Modal/Overlay (Styles will inherit dark mode) *** -->
+    <!-- *** 2. Auth Modal/Overlay *** -->
     <div id="auth-overlay" class="fixed inset-0 bg-white flex items-center justify-center z-[200] hidden">
         <div class="bg-white p-6 md:p-10 rounded-xl shadow-2xl w-11/12 max-w-sm transform transition-all duration-300 border border-gray-100">
             <h3 id="auth-title" class="text-3xl font-bold text-gray-900 mb-6 text-center">Sign In</h3>
             
             <div id="auth-message" class="text-sm text-center text-red-500 mb-4 hidden"></div>
 
-            <input id="auth-email" type="email" placeholder="Email" class="w-full mb-3 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-900">
-            <input id="auth-password" type="password" placeholder="Password" class="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-900">
+            <!-- Inputs will inherit dark mode color via global CSS rules -->
+            <input id="auth-email" type="email" placeholder="Email" class="w-full mb-3 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            <input id="auth-password" type="password" placeholder="Password" class="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
 
             <button id="auth-primary-btn" class="w-full py-3 mb-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150 active:scale-[.99]">
                 Sign In
@@ -197,11 +239,12 @@
     <div id="app" class="flex flex-1 overflow-hidden h-screen hidden">
         
         <!-- Note List (Sidebar) -->
+        <!-- Responsive layout: w-full on mobile, fixed w-80 on desktop/tablet -->
         <div id="note-list-container" class="w-full md:w-80 border-r border-gray-200 bg-white flex flex-col transition-transform duration-300 ease-in-out md:static absolute inset-0 z-10">
-            <div class="p-4 border-b border-gray-200 shadow-sm flex justify-between items-center bg-gray-50">
+            <div class="p-4 border-b border-gray-200 shadow-sm flex justify-between items-center bg-white">
                 <h1 class="text-2xl font-bold text-gray-900">My Notes</h1>
                 <div class="flex space-x-2 items-center">
-                    <!-- Dark Mode Toggle -->
+                    <!-- Dark Mode Toggle (Fixed in place) -->
                     <button id="dark-mode-toggle" title="Toggle Dark Mode" class="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition duration-150 active:scale-95">
                         <i data-lucide="sun" class="w-5 h-5"></i>
                     </button>
@@ -215,29 +258,29 @@
             </div>
 
             <!-- Search Input -->
-            <div class="p-4 border-b border-gray-100 bg-gray-50">
+            <div class="p-4 border-b border-gray-100 bg-white">
                  <div class="relative">
                     <i id="search-icon" data-lucide="search" class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     <input id="search-input" type="text" placeholder="Search notes or #tag..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-700">
                 </div>
             </div>
 
-            <div id="notes-list" class="notes-list flex-1 overflow-y-auto p-2 bg-white">
+            <div id="notes-list" class="notes-list flex-1 overflow-y-auto p-2">
                 <!-- Notes will be injected here -->
             </div>
 
-            <div class="p-2 text-xs text-gray-500 border-t border-gray-100 text-center bg-gray-50">
+            <div class="p-2 text-xs text-gray-500 border-t border-gray-100 text-center bg-white">
                 <p>User ID: <span id="user-id-display" class="font-mono text-indigo-500 break-all">...</span></p>
             </div>
         </div>
 
         <!-- Note Editor -->
         <div id="note-editor-container" class="flex-1 flex-col bg-white md:flex hidden">
-            <!-- Editor Header -->
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shadow-sm">
+            <!-- Editor Header (Sticky for mobile UX) -->
+            <div class="sticky top-0 z-10 p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shadow-md">
                 <div class="flex items-center space-x-3">
                     <!-- Back to list button (Mobile only) -->
-                    <button id="back-to-list-btn" class="text-indigo-600 md:hidden p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition duration-150">
+                    <button id="back-to-list-btn" title="Back to Notes" class="text-indigo-600 md:hidden p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition duration-150">
                         <i data-lucide="arrow-left" class="w-5 h-5"></i>
                     </button>
                     <!-- Sidebar Toggle (Desktop/Tablet) -->
@@ -257,7 +300,7 @@
                         <i data-lucide="eye" class="w-5 h-5"></i>
                     </button>
                     
-                    <!-- Share / Unshare Button (Dynamic - RED/Rotated Share icon for UNSHARE) -->
+                    <!-- Share / Unshare Button (Dynamic) -->
                     <button id="dynamic-share-btn" title="Share Note" class="p-2 text-green-600 rounded-lg hover:bg-green-50 transition duration-150 active:scale-95 opacity-50 pointer-events-none">
                         <i data-lucide="share-2" class="w-5 h-5"></i>
                     </button>
@@ -267,1214 +310,1141 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- Markdown Toolbar (NEW FEATURE) -->
-            <div id="markdown-toolbar" class="p-3 border-b border-gray-200 flex space-x-2 overflow-x-auto bg-gray-50">
-                <button data-format="bold" title="Bold (**)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="bold" class="w-4 h-4"></i></button>
-                <button data-format="italic" title="Italic (*)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="italic" class="w-4 h-4"></i></button>
-                <button data-format="h1" title="Heading 1 (#)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="heading-1" class="w-4 h-4"></i></button>
-                <button data-format="h2" title="Heading 2 (##)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="heading-2" class="w-4 h-4"></i></button>
-                <button data-format="list" title="Unordered List (*)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="list" class="w-4 h-4"></i></button>
-                <button data-format="code" title="Inline Code (`)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="code" class="w-4 h-4"></i></button>
-                <button data-format="block" title="Code Block (<button data-format="link" title="Link (text)" class="format-btn p-2 text-gray-600 rounded-lg hover:bg-gray-100 transition active:scale-95"><i data-lucide="link" class="w-4 h-4"></i></button>
-</div>
-        <!-- Editor Body -->
-        <div id="editor-body" class="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
-            <input id="note-title" type="text" placeholder="Title your note (supports markdown)" class="w-full text-3xl font-bold border-none focus:ring-0 focus:outline-none placeholder-gray-300 p-0 text-gray-900 bg-transparent">
-            
-            <!-- Tags Input -->
-            <input id="note-tags-input" type="text" placeholder="Tags (e.g., work, project, #idea)" class="w-full text-sm border-none focus:ring-0 focus:outline-none placeholder-gray-400 p-0 text-gray-500 border-b pb-2 bg-transparent">
 
-            <!-- Raw Markdown Textarea (Default View) -->
-            <textarea id="note-content" placeholder="Start typing here... supports **Markdown**!" class="editor-content w-full h-full text-lg border-none focus:ring-0 focus:outline-none resize-none placeholder-gray-400 p-0 text-gray-700 bg-transparent"></textarea>
+            <!-- Editor Body -->
+            <div id="editor-body" class="flex-1 flex flex-col overflow-y-auto p-6 space-y-4">
+                <input id="note-title" type="text" placeholder="Title your note (supports markdown)" class="w-full text-3xl font-bold border-none focus:ring-0 focus:outline-none placeholder-gray-300 p-0 text-gray-900 bg-transparent">
+                
+                <!-- Tags Input -->
+                <input id="note-tags-input" type="text" placeholder="Tags (e.g., work, project, #idea) - Max 10" class="w-full text-sm border-none focus:ring-0 focus:outline-none placeholder-gray-400 p-0 text-gray-500 border-b pb-2 bg-transparent">
 
-            <!-- Markdown Preview Div (Hidden by Default) -->
-            <div id="markdown-preview" class="markdown-viewer w-full h-full text-lg p-0 text-gray-700 hidden"></div>
+                <!-- Raw Markdown Textarea (Default View) -->
+                <!-- Use h-full to ensure it takes remaining space, flex-1 in container handles scroll -->
+                <textarea id="note-content" placeholder="Start typing here... supports **Markdown**!" class="editor-content w-full flex-1 text-lg border-none focus:ring-0 focus:outline-none resize-none placeholder-gray-400 p-0 text-gray-700 bg-transparent"></textarea>
+
+                <!-- Markdown Preview Div (Hidden by Default) -->
+                <div id="markdown-preview" class="markdown-viewer w-full flex-1 text-lg p-0 text-gray-700 hidden"></div>
+            </div>
+        </div>
+
+        <!-- Empty State for Editor -->
+        <div id="empty-editor-state" class="flex-1 flex-col items-center justify-center text-gray-400 p-6 md:flex hidden">
+            <i data-lucide="notebook-pen" class="w-16 h-16 mb-4"></i>
+            <p class="text-xl font-medium">Select a note or create a new one</p>
         </div>
     </div>
 
-    <!-- Empty State for Editor -->
-    <div id="empty-editor-state" class="flex-1 flex-col items-center justify-center text-gray-400 p-6 md:flex hidden bg-gray-50">
-        <i data-lucide="notebook-pen" class="w-16 h-16 mb-4"></i>
-        <p class="text-xl font-medium">Select a note or create a new one</p>
-    </div>
-</div>
-
-<!-- Confirmation Modal (REUSABLE) -->
-<div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[100]">
-    <div class="bg-white p-6 rounded-xl shadow-2xl w-11/12 max-w-sm transform scale-100 transition-transform duration-300">
-        <h3 id="modal-title" class="text-xl font-semibold text-gray-800 mb-3">Confirm Action</h3>
-        <p id="modal-message" class="text-gray-600 mb-6">Are you sure you want to perform this action?</p>
-        <div class="flex justify-end space-x-3">
-            <button id="modal-cancel-btn" class="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition duration-150">Cancel</button>
-            <button id="modal-confirm-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-150">Confirm</button>
+    <!-- Confirmation Modal (REUSABLE) -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[100]">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-11/12 max-w-sm transform scale-100 transition-transform duration-300">
+            <h3 id="modal-title" class="text-xl font-semibold text-gray-800 mb-3">Confirm Action</h3>
+            <p id="modal-message" class="text-gray-600 mb-6">Are you sure you want to perform this action?</p>
+            <div class="flex justify-end space-x-3">
+                <button id="modal-cancel-btn" class="px-4 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition duration-150">Cancel</button>
+                <button id="modal-confirm-btn" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-150">Confirm</button>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- Share URL Modal -->
-<div id="share-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[100]">
-    <div class="bg-white p-6 rounded-xl shadow-2xl w-11/12 max-w-lg">
-        <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-            <i data-lucide="link" class="w-5 h-5 mr-2 text-indigo-500"></i> Note Shared Successfully
-        </h3>
-        <p class="text-gray-600 mb-4">Copy the link below to share this note as a read-only page.</p>
-        <div class="flex space-x-2">
-            <input id="share-url-input" type="text" readonly class="flex-1 p-3 border border-gray-300 rounded-lg bg-gray-50 text-sm truncate text-gray-900">
-            <button id="copy-share-url-btn" class="px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150 flex items-center">
-                <i data-lucide="copy" class="w-4 h-4 mr-2"></i> Copy
-            </button>
+    
+    <!-- Share URL Modal -->
+    <div id="share-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-[100]">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-11/12 max-w-lg">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
+                <i data-lucide="link" class="w-5 h-5 mr-2 text-indigo-500"></i> Note Shared Successfully
+            </h3>
+            <p class="text-gray-600 mb-4">Copy the link below to share this note as a read-only page.</p>
+            <div class="flex space-x-2">
+                <input id="share-url-input" type="text" readonly class="flex-1 p-3 border border-gray-300 rounded-lg bg-gray-50 text-sm truncate text-gray-900">
+                <button id="copy-share-url-btn" class="px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150 flex items-center">
+                    <i data-lucide="copy" class="w-4 h-4 mr-2"></i> Copy
+                </button>
+            </div>
+            <button id="share-modal-close-btn" class="mt-4 w-full py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition duration-150">Close</button>
         </div>
-        <button id="share-modal-close-btn" class="mt-4 w-full py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition duration-150">Close</button>
     </div>
-</div>
 
 
-<!-- Firebase Imports and Logic -->
-<script type="module">
-    // Import Firebase SDKs
-    import { initializeApp } from "[https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js](https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js)";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "[https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js](https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js)";
-    import { getFirestore, doc, collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp, setLogLevel, getDoc } from "[https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js](https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js)";
+    <!-- Firebase Imports and Logic -->
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp, setLogLevel, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // --- GLOBAL SETUP ---
+        // --- GLOBAL SETUP ---
 
-    setLogLevel('Debug');
+        setLogLevel('Debug');
 
-    const PROVIDED_FIREBASE_CONFIG = {
-        apiKey: "AIzaSyBqObkmL_fZeeAoaS4weJGx7VU4CskppuQ",
-        authDomain: "cloudnote-be55c.firebaseapp.com",
-        projectId: "cloudnote-be55c",
-        storageBucket: "cloudnote-be55c.firebasestorage.app",
-        messagingSenderId: "744575504537",
-        appId: "1:744575504537:web:2b76ec5ca81faca23a6808",
-        measurementId: "G-LQY0X53JGF"
-    };
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : PROVIDED_FIREBASE_CONFIG;
-    const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId;
+        // Note: Using a mock config since this is hosted on GitHub Pages
+        const PROVIDED_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyBqObkmL_fZeeAoaS4weJGx7VU4CskppuQ",
+            authDomain: "cloudnote-be55c.firebaseapp.com",
+            projectId: "cloudnote-be55c",
+            storageBucket: "cloudnote-be55c.firebasestorage.app",
+            messagingSenderId: "744575504537",
+            appId: "1:744575504537:web:2b76ec5ca81faca23a6808",
+            measurementId: "G-LQY0X53JGF"
+        };
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : PROVIDED_FIREBASE_CONFIG;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId;
 
-    // Global Firebase Instances and State
-    let firebaseApp = null;
-    let db = null;
-    let auth = null;
-    let googleProvider = null;
+        // Global Firebase Instances and State
+        let firebaseApp = null;
+        let db = null;
+        let auth = null;
+        let googleProvider = null;
 
-    let userId = null;
-    let isAuthReady = false; 
-    let isNotesLoaded = false; 
-    let isDarkMode = false; // Dark Mode State
+        let userId = null;
+        let isAuthReady = false; 
+        let isNotesLoaded = false; 
+        let isDarkMode = false; 
 
-    let notesData = [];
-    let activeNoteId = null;
-    let saveTimer = null;
-    let authMode = 'signin';
-    let unsubscribeNotes = null;
-    
-    let searchTerm = '';
-    let saveStatus = 'Saved';
-    let isMarkdownPreview = false;
-    let isSidebarOpen = true; 
-
-    // --- DOM Elements ---
-    const bodyElement = document.body;
-    const loadingSpinnerOverlay = document.getElementById('loading-spinner-overlay');
-    const appContainer = document.getElementById('app');
-    const authOverlay = document.getElementById('auth-overlay');
-    const userIdDisplay = document.getElementById('user-id-display');
-    const notesListContainer = document.getElementById('note-list-container');
-    const notesListElement = document.getElementById('notes-list');
-    const newNoteBtn = document.getElementById('new-note-btn');
-    const noteTitleInput = document.getElementById('note-title');
-    const noteTagsInput = document.getElementById('note-tags-input');
-    const noteContentTextarea = document.getElementById('note-content');
-    const deleteNoteBtn = document.getElementById('delete-note-btn');
-    const lastEditedTimeSpan = document.getElementById('last-edited-time');
-    const noteEditorContainer = document.getElementById('note-editor-container');
-    const emptyEditorState = document.getElementById('empty-editor-state');
-    const backToListBtn = document.getElementById('back-to-list-btn');
-    const signoutBtn = document.getElementById('signout-btn');
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modalCancelBtn = document.getElementById('modal-cancel-btn');
-    const modalConfirmBtn = document.getElementById('modal-confirm-btn');
-    const searchInput = document.getElementById('search-input');
-    const searchIcon = document.getElementById('search-icon');
-    const saveStatusSpan = document.getElementById('save-status-span');
-    const markdownPreviewDiv = document.getElementById('markdown-preview');
-    const markdownToggleBtn = document.getElementById('markdown-toggle-btn');
-    const dynamicShareBtn = document.getElementById('dynamic-share-btn');
-    const shareModalOverlay = document.getElementById('share-modal-overlay');
-    const shareUrlInput = document.getElementById('share-url-input');
-    const copyShareUrlBtn = document.getElementById('copy-share-url-btn');
-    const shareModalCloseBtn = document.getElementById('share-modal-close-btn');
-    const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
-    const darkModeToggleBtn = document.getElementById('dark-mode-toggle');
-    const markdownToolbar = document.getElementById('markdown-toolbar'); // NEW
-
-    // Shared Viewer Elements
-    const sharedViewerContainer = document.getElementById('shared-viewer-container');
-    const sharedTitle = document.getElementById('shared-title');
-    const sharedMeta = document.getElementById('shared-meta');
-    const sharedMarkdownContent = document.getElementById('shared-markdown-content');
-
-    // Auth Form Elements
-    const authMessage = document.getElementById('auth-message');
-    const authEmailInput = document.getElementById('auth-email');
-    const authPasswordInput = document.getElementById('auth-password');
-    const authPrimaryBtn = document.getElementById('auth-primary-btn');
-    const authGoogleBtn = document.getElementById('auth-google-btn');
-    const authToggleLink = document.getElementById('auth-toggle-link');
-    const authResetLink = document.getElementById('auth-reset-link');
-
-
-    // --- UTILITY & LOADING CONTROL ---
-    
-    const hideLoadingSpinner = () => {
-        if (isAuthReady && (isNotesLoaded || window.location.hash.startsWith('#/shared/'))) {
-            loadingSpinnerOverlay.classList.add('hidden');
-        }
-    }
-    
-    const parseTags = (tagString) => {
-        if (!tagString) return [];
-        return tagString.split(',')
-            .map(tag => tag.trim().toLowerCase())
-            .filter(tag => tag.length > 0)
-            .slice(0, 10);
-    };
-
-    const tagsArrayToString = (tagsArray) => {
-        if (!tagsArray || tagsArray.length === 0) return '';
-        return tagsArray.join(', ');
-    };
-    
-    const stripMarkdown = (markdownText) => {
-        if (!markdownText) return '';
-        let stripped = markdownText
-            .replace(/([#*-])/g, '') 
-            .replace(/(\[[^\]]*\]\([^\)]*\))/g, '') 
-            .replace(/(\n+)/g, ' ') 
-            .trim();
-        return stripped.substring(0, 100).trim(); 
-    };
-
-    /**
-     * Inserts markdown syntax into a textarea at the current cursor position.
-     * @param {string} syntax The markdown syntax to wrap around the selection or insert.
-     * @param {string} placeholder Placeholder text if no text is selected.
-     */
-    const insertAtCursor = (syntax, placeholder = '') => {
-        const textarea = noteContentTextarea;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const value = textarea.value;
-        let newValue = value;
-        let newCursorPos = start + syntax.length;
-
-        if (start === end) {
-            // No selection, insert placeholder with syntax
-            newValue = value.substring(0, start) + syntax + placeholder + syntax + value.substring(end);
-            newCursorPos = start + syntax.length + placeholder.length;
-        } else {
-            // Selection exists, wrap selection with syntax
-            const selectedText = value.substring(start, end);
-            newValue = value.substring(0, start) + syntax + selectedText + syntax + value.substring(end);
-            newCursorPos = start + syntax.length + selectedText.length + syntax.length;
-        }
-
-        textarea.value = newValue;
-        textarea.selectionStart = textarea.selectionEnd = newCursorPos;
-        textarea.focus();
+        let notesData = [];
+        let activeNoteId = null;
+        let saveTimer = null;
+        let authMode = 'signin';
+        let unsubscribeNotes = null;
         
-        // Trigger input event for auto-save
-        textarea.dispatchEvent(new Event('input'));
-    };
-
-    // --- DARK MODE LOGIC (RELIABILITY CHECKED) ---
-    const initializeDarkMode = () => {
-        const savedMode = localStorage.getItem('notesAppDarkMode');
-        if (savedMode === 'true') {
-            isDarkMode = true;
-        } else if (savedMode === 'false') {
-             isDarkMode = false;
-        } else {
-            // Default to system preference if no local storage setting exists
-            isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
-        applyDarkMode(isDarkMode);
-    };
-
-    const applyDarkMode = (enabled) => {
-        isDarkMode = enabled;
-        if (isDarkMode) {
-            bodyElement.classList.add('dark');
-            darkModeToggleBtn.innerHTML = '<i data-lucide="moon" class="w-5 h-5"></i>';
-            darkModeToggleBtn.title = "Toggle Light Mode";
-        } else {
-            bodyElement.classList.remove('dark');
-            darkModeToggleBtn.innerHTML = '<i data-lucide="sun" class="w-5 h-5"></i>';
-            darkModeToggleBtn.title = "Toggle Dark Mode";
-        }
-        localStorage.setItem('notesAppDarkMode', isDarkMode);
-        lucide.createIcons();
-    };
-
-    const toggleDarkMode = () => {
-        applyDarkMode(!isDarkMode);
-    };
-
-
-    // --- FIREBASE INITIALIZATION & AUTH ---
-
-    const initializeFirebase = () => {
-        firebaseApp = initializeApp(firebaseConfig);
-        db = getFirestore(firebaseApp);
-        auth = getAuth(firebaseApp);
-        googleProvider = new GoogleAuthProvider();
-
-        // Check if initial auth token is provided and sign in
-         if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-             // Use custom token sign in logic (required by Canvas environment)
-             auth.signInWithCustomToken(__initial_auth_token)
-                .catch(error => {
-                    console.error("Custom Token Sign In Failed. Falling back to anonymous or standard sign-in.", error);
-                    // If token fails, fall through to onAuthStateChanged which will handle sign-in/out state
-                });
-        } else {
-            // Standard anonymous sign-in fallback if no token provided
-             signInAnonymously(auth).catch(error => console.error("Anonymous Sign In Failed:", error));
-        }
-
-
-        onAuthStateChanged(auth, (user) => {
-            isAuthReady = true; 
-            
-            const hash = window.location.hash;
-            const isSharedRoute = hash.startsWith('#/shared/');
-
-            if (user) {
-                userId = user.uid;
-                userIdDisplay.textContent = userId;
-                
-                authOverlay.classList.add('hidden');
-                sharedViewerContainer.classList.add('hidden'); 
-                appContainer.classList.remove('hidden');
-
-                startNoteListener(); 
-                
-            } else {
-                // User is signed out.
-                userId = null;
-                isNotesLoaded = true;
-                notesData = [];
-                setActiveNote(null);
-
-                if (unsubscribeNotes) {
-                    unsubscribeNotes();
-                    unsubscribeNotes = null;
-                }
-
-                if (!isSharedRoute) {
-                    if (!hash.startsWith('#/signup') && !hash.startsWith('#/reset')) {
-                        window.location.hash = '#/signin';
-                    }
-                }
-            }
-            
-            handleRouting();
-        });
-    };
-    
-    // --- AUTH LOGIC (Simplified for brevity, unchanged from previous step) ---
-    // ... (handlePrimaryAuthAction, handleGoogleSignIn, handleSignOut, setAuthMode, setAuthMessage functions remain the same) ...
-    const setAuthMessage = (message, isError = true) => {
-        authMessage.textContent = message;
-        authMessage.classList.remove('hidden', isError ? 'text-green-600' : 'text-red-500');
-        authMessage.classList.add(isError ? 'text-red-500' : 'text-green-600');
-    };
-
-    const setAuthMode = (mode) => {
-        // Unchanged implementation from previous version
-        authMode = mode;
-        const authTitle = document.getElementById('auth-title'); // Get inside function for context
-        
-        authEmailInput.value = '';
-        authPasswordInput.value = '';
-        authMessage.classList.add('hidden');
-
-        // Apply correct text color to inputs based on dark mode
-        const isDark = bodyElement.classList.contains('dark');
-        const textColorClass = isDark ? 'text-gray-100' : 'text-gray-900';
-        
-        // Clear existing text color classes
-        ['text-gray-100', 'text-gray-900'].forEach(cls => {
-            authEmailInput.classList.remove(cls);
-            authPasswordInput.classList.remove(cls);
-        });
-        
-        // Add new text color class
-        authEmailInput.classList.add(textColorClass);
-        authPasswordInput.classList.add(textColorClass);
-
-
-        if (mode === 'signin') {
-            authTitle.textContent = 'Sign In to Your Notes';
-            authPrimaryBtn.textContent = 'Sign In';
-            authToggleLink.href = '#/signup';
-            authToggleLink.textContent = 'Need an account? Sign Up';
-            authResetLink.classList.remove('hidden');
-            authPasswordInput.classList.remove('hidden');
-            authPasswordInput.type = 'password';
-        } else if (mode === 'signup') {
-            authTitle.textContent = 'Create an Account';
-            authPrimaryBtn.textContent = 'Sign Up';
-            authToggleLink.href = '#/signin';
-            authToggleLink.textContent = 'Already have an account? Sign In';
-            authResetLink.classList.add('hidden');
-            authPasswordInput.classList.remove('hidden');
-            authPasswordInput.type = 'password';
-        } else if (mode === 'reset') {
-            authTitle.textContent = 'Reset Password';
-            authPrimaryBtn.textContent = 'Send Reset Email';
-            authToggleLink.href = '#/signin';
-            authToggleLink.textContent = 'Go back to Sign In';
-            authResetLink.classList.add('hidden');
-            authPasswordInput.classList.add('hidden');
-        }
-        authPrimaryBtn.disabled = false;
-    };
-
-    const handlePrimaryAuthAction = async () => {
-        const email = authEmailInput.value.trim();
-        const password = authPasswordInput.value.trim();
-        const btnText = authPrimaryBtn.textContent;
-        authPrimaryBtn.disabled = true;
-        authPrimaryBtn.textContent = 'Loading...';
-
-        try {
-            if (authMode === 'signin') {
-                await signInWithEmailAndPassword(auth, email, password);
-            } else if (authMode === 'signup') {
-                await createUserWithEmailAndPassword(auth, email, password);
-            } else if (authMode === 'reset') {
-                await sendPasswordResetEmail(auth, email);
-                setAuthMessage('Password reset email sent! Check your inbox.', false);
-                authPrimaryBtn.textContent = btnText;
-                authPrimaryBtn.disabled = false;
-                return; 
-            }
-        } catch (error) {
-            let message = "An unknown error occurred.";
-            if (error.code) {
-                switch (error.code) {
-                    case 'auth/invalid-email': message = 'Invalid email format.'; break;
-                    case 'auth/user-not-found': message = 'User not found.'; break;
-                    case 'auth/wrong-password': message = 'Invalid password.'; break;
-                    case 'auth/email-already-in-use': message = 'Email already in use.'; break;
-                    case 'auth/weak-password': message = 'Password should be at least 6 characters.'; break;
-                    default: message = `Error: ${error.message}`;
-                }
-            }
-            setAuthMessage(message);
-            authPrimaryBtn.textContent = btnText;
-            authPrimaryBtn.disabled = false;
-        }
-    };
-
-    const handleGoogleSignIn = async () => {
-        authGoogleBtn.disabled = true;
-        authGoogleBtn.textContent = 'Loading...';
-        try {
-            await signInWithPopup(auth, googleProvider);
-        } catch (error) {
-            console.error("Google Sign In Error:", error);
-            setAuthMessage('Google sign-in failed.', true);
-            authGoogleBtn.textContent = 'Sign in with Google';
-            authGoogleBtn.disabled = false;
-        }
-    };
-
-    const handleSignOut = async () => {
-        signoutBtn.disabled = true;
-        try {
-            activeNoteId = null; 
-            window.location.hash = '#/';
-            await signOut(auth);
-            signoutBtn.disabled = false;
-        } catch (error) {
-            console.error("Sign Out Error:", error);
-            // Use a modal instead of console for user feedback
-            showConfirmationModal({
-                title: "Sign Out Failed",
-                message: `Failed to sign out: ${error.message}`,
-                confirmText: "Close",
-                confirmClass: "bg-indigo-600 hover:bg-indigo-700",
-                onConfirm: hideModal,
-                showCancel: false
-            });
-            signoutBtn.disabled = false;
-        }
-    };
-    // --- END AUTH LOGIC ---
-
-    // --- ROUTING & UI MANAGEMENT ---
-
-    const handleRouting = () => {
-        let hash = window.location.hash || '#/';
-        document.title = "Secure Cloud Notes";
-        
-        if (!isAuthReady) return; 
-        
-        const isSharedRoute = hash.startsWith('#/shared/');
-
-        if (isSharedRoute) {
-            appContainer.classList.add('hidden');
-            authOverlay.classList.add('hidden');
-            sharedViewerContainer.classList.remove('hidden');
-            const sharedId = hash.substring(9);
-            renderSharedNote(sharedId);
-            hideLoadingSpinner();
-            return;
-        } else {
-             sharedViewerContainer.classList.add('hidden');
-        }
-
-
-        if (userId) {
-            // AUTHENTICATED USER FLOW
-            authOverlay.classList.add('hidden');
-            appContainer.classList.remove('hidden');
-            
-            if (hash.startsWith('#/notes/')) {
-                const noteId = hash.substring(8);
-                setActiveNote(noteId); 
-            } else {
-                setActiveNote(null); 
-            }
-
-        } else {
-            // UNAUTHENTICATED USER FLOW
-            appContainer.classList.add('hidden');
-            authOverlay.classList.remove('hidden');
-
-            if (hash === '#/signup') {
-                setAuthMode('signup');
-            } else if (hash === '#/reset') {
-                setAuthMode('reset');
-            } else {
-                setAuthMode('signin');
-                window.location.hash = '#/signin'; 
-            }
-        }
-        
-        hideLoadingSpinner(); 
-    };
-
-    // --- FIRESTORE OPERATIONS (Unchanged from previous version for core logic) ---
-
-    const getNotesCollectionRef = () => {
-        if (!db || !userId) return null;
-        const path = `artifacts/${appId}/users/${userId}/notes`;
-        return collection(db, path);
-    };
-    
-    const getSharedCollectionRef = () => {
-        if (!db) return null;
-        const path = `artifacts/${appId}/public/data/shared_notes`;
-        return collection(db, path);
-    };
-    
-    const startNoteListener = () => {
-        const notesRef = getNotesCollectionRef();
-        if (!notesRef) return;
-        
-        if (unsubscribeNotes) {
-            unsubscribeNotes();
-        }
-
-        const q = query(notesRef);
-
-        unsubscribeNotes = onSnapshot(q, (snapshot) => {
-            const newNotes = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                tags: Array.isArray(doc.data().tags) ? doc.data().tags : [], 
-                updatedAt: doc.data().updatedAt?.toDate() || new Date(0)
-            }));
-
-            notesData = newNotes;
-            renderNoteList();
-
-            if (activeNoteId && !notesData.find(note => note.id === activeNoteId)) {
-                window.location.hash = '#/';
-            }
-            
-            if (activeNoteId) {
-                setActiveNote(activeNoteId);
-            }
-
-            if (!isNotesLoaded) {
-                isNotesLoaded = true;
-                hideLoadingSpinner();
-            }
-
-        }, (error) => {
-            console.error("Error listening to notes:", error);
-            setSaveStatus('Error!');
-            if (!isNotesLoaded) {
-                 isNotesLoaded = true;
-                 hideLoadingSpinner();
-            }
-        });
-    };
-
-    const createNewNote = async () => {
-        if (!userId) return;
-
-        const notesRef = getNotesCollectionRef();
-        if (!notesRef) return;
-
-        try {
-            const newNote = {
-                title: "New Note",
-                content: "This note supports **Markdown** formatting.",
-                tags: [], 
-                updatedAt: serverTimestamp(),
-                isShared: false,
-                sharedId: null 
-            };
-            const docRef = await addDoc(notesRef, newNote);
-            window.location.hash = `#/notes/${docRef.id}`;
-        } catch (error) {
-            console.error("Error creating new note:", error);
-        }
-    };
-
-    const setSaveStatus = (status) => {
-        saveStatus = status;
-        let text = status;
-        let color = 'text-gray-400';
-
-        if (status === 'Typing...') {
-            text = 'Typing...';
-            color = isDarkMode ? 'text-gray-300' : 'text-gray-500';
-        } else if (status === 'Saving...') {
-            text = 'Saving...';
-            color = 'text-indigo-500';
-        } else if (status === 'Saved') {
-            text = 'Saved';
-            color = 'text-green-500'; // Adjusted to 500 for better contrast
-        } else if (status === 'Error!') {
-            text = 'Error! (Check console)';
-            color = 'text-red-500';
-        }
-        
-        saveStatusSpan.textContent = text;
-        saveStatusSpan.className = `text-xs font-medium ${color}`;
-    };
-
-    const saveActiveNote = async (title, content, tagsString) => {
-        if (!activeNoteId || !userId) return;
-
-        const notesRef = getNotesCollectionRef();
-        if (!notesRef) return;
-        
-        const activeNote = notesData.find(note => note.id === activeNoteId);
-        const isShared = activeNote?.isShared === true;
-        const newTagsArray = parseTags(tagsString);
-
-        try {
-            setSaveStatus('Saving...');
-            const noteDocRef = doc(notesRef, activeNoteId);
-            
-            const updatePayload = {
-                title: title || '(No Title)',
-                content: content,
-                tags: newTagsArray,
-                updatedAt: serverTimestamp()
-            };
-
-            await updateDoc(noteDocRef, updatePayload);
-
-            if (isShared && activeNote.sharedId) {
-                const sharedRef = getSharedCollectionRef();
-                const sharedDocRef = doc(sharedRef, activeNote.sharedId);
-                await updateDoc(sharedDocRef, updatePayload);
-            }
-            
-            setSaveStatus('Saved');
-        } catch (error) {
-            console.error("Error saving note:", error);
-            setSaveStatus('Error!');
-        }
-    };
-    
-    const shareActiveNote = async () => {
-        // Unchanged implementation from previous version
-         if (!activeNoteId || !userId) return;
-
-        const activeNote = notesData.find(note => note.id === activeNoteId);
-        if (!activeNote) return;
-
-        const sharedRef = getSharedCollectionRef();
-        const notesRef = getNotesCollectionRef();
-
-        try {
-            dynamicShareBtn.disabled = true;
-            dynamicShareBtn.title = "Sharing...";
-
-            const baseData = {
-                title: activeNote.title || '(No Title)',
-                content: activeNote.content || '',
-                tags: activeNote.tags || [],
-                authorId: userId, 
-                authorName: auth.currentUser?.email || 'Anonymous',
-                updatedAt: serverTimestamp(),
-            };
-
-            let sharedId = activeNote.sharedId;
-
-            if (activeNote.isShared && activeNote.sharedId) {
-                const sharedDocRef = doc(sharedRef, activeNote.sharedId);
-                await updateDoc(sharedDocRef, baseData);
-            } else {
-                const sharedDocRef = await addDoc(sharedRef, baseData);
-                sharedId = sharedDocRef.id;
-
-                const noteDocRef = doc(notesRef, activeNoteId);
-                await updateDoc(noteDocRef, {
-                    isShared: true,
-                    sharedId: sharedId,
-                });
-            }
-            
-            const shareUrl = `${window.location.origin}/#/shared/${sharedId}`;
-            shareUrlInput.value = shareUrl;
-            shareModalOverlay.classList.remove('hidden');
-            shareModalOverlay.classList.add('flex');
-            
-            dynamicShareBtn.disabled = false;
-            setActiveNote(activeNoteId); 
-        } catch (error) {
-            console.error("Error sharing note:", error);
-            showConfirmationModal({
-                title: "Sharing Failed",
-                message: `Could not share note due to a permission or network error: ${error.message}`,
-                confirmText: "Close",
-                confirmClass: "bg-indigo-600 hover:bg-indigo-700",
-                onConfirm: hideModal,
-                showCancel: false
-            });
-            dynamicShareBtn.disabled = false;
-        }
-    };
-    
-    const unshareActiveNote = async () => {
-         // Unchanged implementation from previous version
-         if (!activeNoteId || !userId) return;
-
-        const activeNote = notesData.find(note => note.id === activeNoteId);
-        if (!activeNote || !activeNote.isShared || !activeNote.sharedId) return;
-        
-        const sharedRef = getSharedCollectionRef();
-        const notesRef = getNotesCollectionRef();
-        const sharedId = activeNote.sharedId;
-
-        try {
-            const sharedDocRef = doc(sharedRef, sharedId);
-            await deleteDoc(sharedDocRef);
-            
-            const noteDocRef = doc(notesRef, activeNoteId);
-            await updateDoc(noteDocRef, {
-                isShared: false,
-                sharedId: null,
-                updatedAt: serverTimestamp()
-            });
-            
-            setActiveNote(activeNoteId); 
-
-        } catch (error) {
-            console.error("Error unsharing note:", error);
-             showConfirmationModal({
-                title: "Unsharing Failed",
-                message: `Could not remove the public copy: ${error.message}`,
-                confirmText: "Close",
-                confirmClass: "bg-indigo-600 hover:bg-indigo-700",
-                onConfirm: hideModal,
-                showCancel: false
-            });
-        }
-    };
-
-
-    // --- UI RENDERING & DISPLAY ---
-    
-    const renderMarkdown = (markdownText) => {
-        return marked.parse(markdownText || '');
-    }
-
-    const getRelativeTime = (date) => {
-        // Unchanged implementation from previous version
-        if (!date || date.getTime() === 0) return 'Never';
-        const seconds = Math.floor((new Date() - date) / 1000);
-        
-        let interval = seconds / 31536000;
-        if (interval > 1) return Math.floor(interval) + " years ago";
-        interval = seconds / 2592000;
-        if (interval > 1) return Math.floor(interval) + " months ago";
-        interval = seconds / 86400;
-        if (interval > 1) return Math.floor(interval) + " days ago";
-        interval = seconds / 3600;
-        if (interval > 1) return Math.floor(interval) + " hours ago";
-        interval = seconds / 60;
-        if (interval > 1) return Math.floor(interval) + " minutes ago";
-        if (seconds < 5) return "just now";
-        return Math.floor(seconds) + " seconds ago";
-    };
-
-
-    const renderNoteList = () => {
-         // Unchanged implementation from previous version
-        const term = searchTerm.toLowerCase().trim();
-        const isTagSearch = term.startsWith('#');
-        const tagTerm = isTagSearch ? term.substring(1) : '';
-
-        if (isTagSearch && tagTerm) {
-            searchIcon.dataset.lucide = 'hash';
-            searchIcon.classList.remove('text-gray-400', 'text-indigo-500');
-            searchIcon.classList.add('text-indigo-500');
-        } else {
-            searchIcon.dataset.lucide = 'search';
-            searchIcon.classList.remove('text-indigo-500');
-            searchIcon.classList.add('text-gray-400');
-        }
-        lucide.createIcons();
-
-
-        const filteredNotes = notesData.filter(note => {
-            if (!term) return true;
-            
-            if (isTagSearch && tagTerm) {
-                return note.tags?.some(tag => tag.includes(tagTerm)) || false;
-            } else {
-                const titleMatch = note.title?.toLowerCase().includes(term);
-                const contentMatch = note.content?.toLowerCase().includes(term);
-                return titleMatch || contentMatch;
-            }
-        });
-        
-        filteredNotes.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
-
-        notesListElement.innerHTML = '';
-        
-        if (filteredNotes.length === 0) {
-            notesListElement.innerHTML = `<p class="p-4 text-center text-gray-400">${term ? `No notes found matching "${term}".` : `Create your first note by clicking the '+' button!`}</p>`;
-            return;
-        }
-
-        filteredNotes.forEach(note => {
-            const isActive = note.id === activeNoteId;
-            const noteItem = document.createElement('a');
-            noteItem.href = `#/notes/${note.id}`;
-            noteItem.className = `p-4 mb-2 rounded-xl cursor-pointer block transition duration-150 ${isActive ? 'active bg-indigo-100 ring-2 ring-indigo-500 shadow-md' : 'bg-gray-50 hover:bg-gray-100'}`;
-            
-            const tagsHtml = note.tags && note.tags.length > 0
-                ? `<div class="mt-1 flex flex-wrap gap-1">${note.tags.map(tag => `<span class="text-[10px] bg-indigo-200 text-indigo-700 px-1.5 py-0.5 rounded-full font-medium">#${tag}</span>`).join('')}</div>`
-                : '';
-            
-            const contentSnippet = stripMarkdown(note.content);
-            
-            noteItem.innerHTML = `
-                <div class="flex items-center space-x-2">
-                    <h3 class="font-semibold ${isActive ? 'text-indigo-800' : 'text-gray-800'} truncate">${note.title || '(No Title)'}</h3>
-                    ${note.isShared ? '<i data-lucide="link" class="w-4 h-4 text-green-500 flex-shrink-0" title="Shared"></i>' : ''}
-                </div>
-                <p class="text-xs text-gray-500 mb-1">${getRelativeTime(note.updatedAt)}</p>
-                ${tagsHtml}
-                <p class="text-sm text-gray-600 line-clamp-2 mt-2">${contentSnippet || 'Empty note...'}</p>
-            `;
-            notesListElement.appendChild(noteItem);
-        });
-        lucide.createIcons();
-    };
-    
-    const updateMarkdownView = (content) => {
-        markdownPreviewDiv.innerHTML = renderMarkdown(content);
-    };
-
-    const toggleMarkdownPreview = (force = null) => {
-        isMarkdownPreview = force !== null ? force : !isMarkdownPreview;
-        
-        if (isMarkdownPreview) {
-            noteContentTextarea.classList.add('hidden');
-            markdownToolbar.classList.add('hidden'); // Hide toolbar in preview mode
-            markdownPreviewDiv.classList.remove('hidden');
-            markdownToggleBtn.innerHTML = '<i data-lucide="file-pen" class="w-5 h-5"></i>';
-            markdownToggleBtn.title = "Toggle Editing Mode";
-            updateMarkdownView(noteContentTextarea.value);
-        } else {
-            noteContentTextarea.classList.remove('hidden');
-            markdownToolbar.classList.remove('hidden'); // Show toolbar in editing mode
-            markdownPreviewDiv.classList.add('hidden');
-            markdownToggleBtn.innerHTML = '<i data-lucide="eye" class="w-5 h-5"></i>';
-            markdownToggleBtn.title = "Toggle Markdown Preview";
-            noteContentTextarea.focus();
-        }
-        lucide.createIcons();
-    };
-
-    const toggleSidebar = (force = null) => {
-         // Unchanged implementation from previous version
-        isSidebarOpen = force !== null ? force : !isSidebarOpen;
-        if (isSidebarOpen) {
-            notesListContainer.classList.remove('md:w-0', 'w-0', 'hidden');
-            notesListContainer.classList.add('md:w-80', 'w-full');
-            toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-close" class="w-5 h-5"></i>';
-        } else {
-            notesListContainer.classList.add('md:w-0', 'w-0', 'hidden');
-            notesListContainer.classList.remove('md:w-80', 'w-full');
-            toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-open" class="w-5 h-5"></i>';
-        }
-        lucide.createIcons();
-    };
-
-
-    const setActiveNote = (noteId) => {
-        activeNoteId = noteId;
-        const activeNote = notesData.find(note => note.id === noteId);
-
-        const isMobile = window.innerWidth < 768;
-
-        if (activeNote) {
-            // UI Setup
-            document.title = (activeNote.title || 'Untitled') + ' | Notes';
-            noteEditorContainer.classList.remove('hidden');
-            noteEditorContainer.classList.add('flex');
-            emptyEditorState.classList.add('hidden');
-            
-            // Mobile UX Fix: Hide list and show back button
-            if (isMobile) {
-                notesListContainer.classList.add('hidden');
-                backToListBtn.classList.remove('hidden');
-            } else {
-                backToListBtn.classList.add('hidden');
-            }
-
-            // Data Population
-            noteTitleInput.value = activeNote.title || '';
-            noteTagsInput.value = tagsArrayToString(activeNote.tags);
-            noteContentTextarea.value = activeNote.content || '';
-            lastEditedTimeSpan.textContent = 'Last edited: ' + getRelativeTime(activeNote.updatedAt);
-            deleteNoteBtn.classList.remove('opacity-50', 'pointer-events-none');
-            
-            // Dynamic Share/Unshare Button (FIXED ICON)
-            if (activeNote.isShared) {
-                dynamicShareBtn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5 transform rotate-12"></i>';
-                dynamicShareBtn.title = "Unshare Note (Delete Public Link)";
-                dynamicShareBtn.classList.remove('text-green-600', 'hover:bg-green-50');
-                // Red color for Unshare
-                dynamicShareBtn.classList.add('text-red-600', 'hover:bg-red-50'); 
-                dynamicShareBtn.onclick = () => showConfirmationModal({
-                    title: "Confirm Unshare",
-                    message: "Are you sure you want to unshare this note? The public link will stop working immediately, and the read-only copy will be permanently deleted.",
-                    confirmText: "Unshare",
-                    confirmClass: "bg-red-600 hover:bg-red-700",
-                    onConfirm: unshareActiveNote
-                });
-            } else {
-                dynamicShareBtn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5"></i>';
-                dynamicShareBtn.title = "Share Note (Create Public Link)";
-                dynamicShareBtn.classList.remove('text-red-600', 'hover:bg-red-50');
-                dynamicShareBtn.classList.add('text-green-600', 'hover:bg-green-50');
-                dynamicShareBtn.onclick = shareActiveNote;
-            }
-            dynamicShareBtn.classList.remove('opacity-50', 'pointer-events-none');
-
-            setSaveStatus('Saved');
-            toggleMarkdownPreview(false);
-            noteTitleInput.focus();
-
-        } else {
-            // Clear and hide editor
-            noteTitleInput.value = '';
-            noteTagsInput.value = '';
-            noteContentTextarea.value = '';
-            lastEditedTimeSpan.textContent = 'Last edited: --';
-            deleteNoteBtn.classList.add('opacity-50', 'pointer-events-none');
-            dynamicShareBtn.classList.add('opacity-50', 'pointer-events-none');
-            setSaveStatus('');
-            
-            // Mobile UX Fix: Show list, hide editor view
-            if (isMobile) {
-                notesListContainer.classList.remove('hidden');
-                noteEditorContainer.classList.add('hidden');
-                emptyEditorState.classList.add('hidden'); 
-                backToListBtn.classList.add('hidden');
-            } else {
-                notesListContainer.classList.remove('hidden');
-                noteEditorContainer.classList.add('hidden');
-                emptyEditorState.classList.remove('hidden');
-            }
-            document.title = "Secure Cloud Notes";
-        }
-
-        renderNoteList();
-        lucide.createIcons();
-    };
-    
-    const renderSharedNote = async (sharedId) => {
-        // Unchanged implementation from previous version
-        const sharedRef = getSharedCollectionRef();
-        const sharedDocRef = doc(sharedRef, sharedId);
-        
-        sharedTitle.textContent = 'Loading Note...';
-        sharedMeta.textContent = '';
-        sharedMarkdownContent.innerHTML = '';
-        
-        try {
-            const docSnap = await getDoc(sharedDocRef);
-            
-            if (docSnap.exists()) {
-                const note = docSnap.data();
-                
-                document.title = (note.title || 'Untitled Shared Note');
-                sharedTitle.textContent = note.title || 'Untitled Note';
-                
-                const timeString = note.updatedAt ? new Date(note.updatedAt.toDate()).toLocaleString() : 'N/A';
-                
-                const tagsHtml = note.tags && note.tags.length > 0
-                    ? `<div class="mt-2 mb-4 flex flex-wrap gap-2">${note.tags.map(tag => `<span class="text-xs ${isDarkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-gray-700'} px-2 py-1 rounded-full font-medium">#${tag}</span>`).join('')}</div>`
-                    : '';
-                    
-                sharedMeta.innerHTML = `Shared by ${note.authorName || 'a user'} | Last updated: ${timeString} ${tagsHtml}`;
-                
-                sharedMarkdownContent.innerHTML = renderMarkdown(note.content || '');
-            } else {
-                sharedTitle.textContent = 'Note Not Found (404)';
-                sharedMeta.textContent = 'The shared note link is invalid or the note has been deleted by the owner.';
-                sharedMarkdownContent.innerHTML = '';
-            }
-        } catch (error) {
-            console.error("Error loading shared note:", error);
-            sharedTitle.textContent = 'An Error Occurred';
-            sharedMeta.textContent = 'Could not load note due to a connection error.';
-            sharedMarkdownContent.innerHTML = `<p class="text-red-500">${error.message}</p>`;
-        } finally {
-            hideLoadingSpinner();
-        }
-    };
-
-
-    // --- REUSABLE MODAL/DIALOG LOGIC ---
-    let currentModalAction = null;
-
-    const showConfirmationModal = ({ title, message, confirmText, confirmClass, onConfirm, showCancel = true }) => {
-        // Unchanged implementation from previous version
+        let searchTerm = '';
+        let saveStatus = 'Saved';
+        let isMarkdownPreview = false;
+        let isSidebarOpen = true; 
+
+        // --- DOM Elements ---
+        const bodyElement = document.body;
+        const loadingSpinnerOverlay = document.getElementById('loading-spinner-overlay');
+        const appContainer = document.getElementById('app');
+        const authOverlay = document.getElementById('auth-overlay');
+        const userIdDisplay = document.getElementById('user-id-display');
+        const notesListContainer = document.getElementById('note-list-container');
+        const notesListElement = document.getElementById('notes-list');
+        const newNoteBtn = document.getElementById('new-note-btn');
+        const noteTitleInput = document.getElementById('note-title');
+        const noteTagsInput = document.getElementById('note-tags-input');
+        const noteContentTextarea = document.getElementById('note-content');
+        const deleteNoteBtn = document.getElementById('delete-note-btn');
+        const lastEditedTimeSpan = document.getElementById('last-edited-time');
+        const noteEditorContainer = document.getElementById('note-editor-container');
+        const emptyEditorState = document.getElementById('empty-editor-state');
+        const backToListBtn = document.getElementById('back-to-list-btn');
+        const signoutBtn = document.getElementById('signout-btn');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
         const modalTitle = document.getElementById('modal-title');
         const modalMessage = document.getElementById('modal-message');
-        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+        const searchInput = document.getElementById('search-input');
+        const searchIcon = document.getElementById('search-icon');
+        const saveStatusSpan = document.getElementById('save-status-span');
+        const markdownPreviewDiv = document.getElementById('markdown-preview');
+        const markdownToggleBtn = document.getElementById('markdown-toggle-btn');
+        const dynamicShareBtn = document.getElementById('dynamic-share-btn');
+        const shareModalOverlay = document.getElementById('share-modal-overlay');
+        const shareUrlInput = document.getElementById('share-url-input');
+        const copyShareUrlBtn = document.getElementById('copy-share-url-btn');
+        const shareModalCloseBtn = document.getElementById('share-modal-close-btn');
+        const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
+        const darkModeToggleBtn = document.getElementById('dark-mode-toggle'); 
 
-        modalTitle.textContent = title;
-        modalMessage.textContent = message;
-        modalConfirmBtn.textContent = confirmText;
+        // Shared Viewer Elements
+        const sharedViewerContainer = document.getElementById('shared-viewer-container');
+        const sharedTitle = document.getElementById('shared-title');
+        const sharedMeta = document.getElementById('shared-meta');
+        const sharedMarkdownContent = document.getElementById('shared-markdown-content');
+
+        // Auth Form Elements
+        const authTitle = document.getElementById('auth-title');
+        const authMessage = document.getElementById('auth-message');
+        const authEmailInput = document.getElementById('auth-email');
+        const authPasswordInput = document.getElementById('auth-password');
+        const authPrimaryBtn = document.getElementById('auth-primary-btn');
+        const authGoogleBtn = document.getElementById('auth-google-btn');
+        const authToggleLink = document.getElementById('auth-toggle-link');
+        const authResetLink = document.getElementById('auth-reset-link');
+
+
+        // --- UTILITY & LOADING CONTROL ---
         
-        modalConfirmBtn.className = "px-4 py-2 text-white rounded-lg transition duration-150 " + (confirmClass || "bg-red-600 hover:bg-red-700");
-        
-        if (showCancel) {
-            modalCancelBtn.classList.remove('hidden');
-        } else {
-            modalCancelBtn.classList.add('hidden');
+        const hideLoadingSpinner = () => {
+            if (isAuthReady && (isNotesLoaded || window.location.hash.startsWith('#/shared/'))) {
+                loadingSpinnerOverlay.classList.add('hidden');
+            }
         }
-
-        currentModalAction = onConfirm;
-
-        modalOverlay.classList.remove('hidden');
-        modalOverlay.classList.add('flex');
-    };
-
-    const hideModal = () => {
-        modalOverlay.classList.add('hidden');
-        modalOverlay.classList.remove('flex');
-        currentModalAction = null;
-    };
-    
-    // --- EVENT HANDLERS ---
-
-    const setupEventListeners = () => {
-        window.addEventListener('hashchange', handleRouting);
         
-        // Dark Mode Toggle
-        darkModeToggleBtn.addEventListener('click', toggleDarkMode);
+        const parseTags = (tagString) => {
+            if (!tagString) return [];
+            // Remove hashtags before splitting, then trim/filter
+            return tagString.split(',')
+                .map(tag => tag.replace(/#/g, '').trim().toLowerCase()) 
+                .filter(tag => tag.length > 0)
+                .slice(0, 10); // Limit to 10 tags
+        };
+
+        const tagsArrayToString = (tagsArray) => {
+            if (!tagsArray || tagsArray.length === 0) return '';
+            return tagsArray.join(', ');
+        };
         
-        // Auth Events
-        authPrimaryBtn.addEventListener('click', handlePrimaryAuthAction);
-        authGoogleBtn.addEventListener('click', handleGoogleSignIn);
-        
-        document.getElementById('auth-toggle-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            const newHash = e.target.getAttribute('href');
-            window.location.hash = newHash;
-            setAuthMode(newHash.substring(2));
-        });
-        document.getElementById('auth-reset-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.hash = e.target.getAttribute('href');
-            setAuthMode('reset');
-        });
+        // Helper to strip markdown for list preview
+        const stripMarkdown = (markdownText) => {
+            if (!markdownText) return '';
+            let stripped = markdownText
+                .replace(/([#*-])/g, '') 
+                .replace(/(\[[^\]]*\]\([^\)]*\))/g, '') 
+                .replace(/(\n+)/g, ' ') 
+                .trim();
+            return stripped.substring(0, 100).trim(); 
+        };
 
 
-        // Modal Events
-        modalCancelBtn.addEventListener('click', hideModal);
-        modalConfirmBtn.addEventListener('click', async () => {
-            if (currentModalAction) {
-                await currentModalAction();
+        // --- DARK MODE LOGIC (Theme Persistence Fix) ---
+        const initializeDarkMode = () => {
+            // 1. Check local storage preference
+            const savedMode = localStorage.getItem('notesAppDarkMode');
+            
+            if (savedMode === 'true') {
+                isDarkMode = true;
+            } else if (savedMode === 'false') {
+                isDarkMode = false;
+            } else {
+                // 2. Fallback to system preference
+                isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
             }
-            hideModal();
-        });
+            
+            // 3. Apply immediately before rendering content
+            applyDarkMode(isDarkMode);
+            // Hide the spinner background now that we know the initial theme
+            loadingSpinnerOverlay.classList.remove('bg-gray-50', 'dark:bg-[#111827]');
+            loadingSpinnerOverlay.classList.add(isDarkMode ? 'bg-[#111827]' : 'bg-gray-50');
+        };
 
-        // App Events
-        signoutBtn.addEventListener('click', handleSignOut);
-        newNoteBtn.addEventListener('click', createNewNote);
-        searchInput.addEventListener('input', (e) => {
-            searchTerm = e.target.value;
-            renderNoteList();
-        });
+        const applyDarkMode = (enabled) => {
+            isDarkMode = enabled;
+            if (isDarkMode) {
+                bodyElement.classList.add('dark');
+                darkModeToggleBtn.innerHTML = '<i data-lucide="moon" class="w-5 h-5"></i>';
+                darkModeToggleBtn.title = "Toggle Light Mode";
+            } else {
+                bodyElement.classList.remove('dark');
+                darkModeToggleBtn.innerHTML = '<i data-lucide="sun" class="w-5 h-5"></i>';
+                darkModeToggleBtn.title = "Toggle Dark Mode";
+            }
+            // Save preference to local storage
+            localStorage.setItem('notesAppDarkMode', isDarkMode);
+            lucide.createIcons();
+            // Re-render note list to fix styles
+            if(userId) renderNoteList();
+        };
+
+        const toggleDarkMode = () => {
+            applyDarkMode(!isDarkMode);
+        };
 
 
-        // Delete handler
-        deleteNoteBtn.addEventListener('click', () => showConfirmationModal({
-            title: "Confirm Deletion",
-            message: "Are you sure you want to delete this note? This action cannot be undone.",
-            confirmText: "Delete",
-            confirmClass: "bg-red-600 hover:bg-red-700",
-            onConfirm: async () => {
-                 if (!activeNoteId || !userId) return;
-                const notesRef = getNotesCollectionRef();
-                const activeNote = notesData.find(note => note.id === activeNoteId);
-                if (!notesRef || !activeNote) return;
+        // --- FIREBASE INITIALIZATION & AUTH ---
 
-                try {
-                    if (activeNote.isShared && activeNote.sharedId) {
-                        const sharedRef = getSharedCollectionRef();
-                        await deleteDoc(doc(sharedRef, activeNote.sharedId));
+        const initializeFirebase = () => {
+            firebaseApp = initializeApp(firebaseConfig);
+            db = getFirestore(firebaseApp);
+            auth = getAuth(firebaseApp);
+            googleProvider = new GoogleAuthProvider();
+
+            onAuthStateChanged(auth, (user) => {
+                isAuthReady = true; 
+                
+                const hash = window.location.hash;
+                const isSharedRoute = hash.startsWith('#/shared/');
+
+                if (user) {
+                    userId = user.uid;
+                    userIdDisplay.textContent = userId;
+                    
+                    authOverlay.classList.add('hidden');
+                    sharedViewerContainer.classList.add('hidden'); 
+                    appContainer.classList.remove('hidden');
+
+                    startNoteListener(); 
+                    
+                } else {
+                    // User is signed out.
+                    userId = null;
+                    isNotesLoaded = true; // No notes to load
+                    notesData = [];
+                    setActiveNote(null);
+
+                    if (unsubscribeNotes) {
+                        unsubscribeNotes();
+                        unsubscribeNotes = null;
                     }
-                    await deleteDoc(doc(notesRef, activeNoteId));
-                    window.location.hash = '#/';
-                } catch (error) {
-                    console.error("Error deleting note:", error);
-                    setSaveStatus('Error!');
+
+                    if (!isSharedRoute) {
+                        // Default sign out behavior: force signin route
+                        if (!hash.startsWith('#/signup') && !hash.startsWith('#/reset')) {
+                            window.location.hash = '#/signin';
+                        }
+                    }
                 }
+                
+                handleRouting();
+            });
+        };
+        
+        // --- AUTH LOGIC ---
+
+        const setAuthMessage = (message, isError = true) => {
+            authMessage.textContent = message;
+            authMessage.classList.remove('hidden', isError ? 'text-green-600' : 'text-red-500');
+            authMessage.classList.add(isError ? 'text-red-500' : 'text-green-600');
+        };
+
+        const setAuthMode = (mode) => {
+            authMode = mode;
+            authEmailInput.value = '';
+            authPasswordInput.value = '';
+            authMessage.classList.add('hidden');
+            
+            if (mode === 'signin') {
+                authTitle.textContent = 'Sign In to Your Notes';
+                authPrimaryBtn.textContent = 'Sign In';
+                authToggleLink.href = '#/signup';
+                authToggleLink.textContent = 'Need an account? Sign Up';
+                authResetLink.classList.remove('hidden');
+                authPasswordInput.classList.remove('hidden');
+                authPasswordInput.type = 'password';
+            } else if (mode === 'signup') {
+                authTitle.textContent = 'Create an Account';
+                authPrimaryBtn.textContent = 'Sign Up';
+                authToggleLink.href = '#/signin';
+                authToggleLink.textContent = 'Already have an account? Sign In';
+                authResetLink.classList.add('hidden');
+                authPasswordInput.classList.remove('hidden');
+                authPasswordInput.type = 'password';
+            } else if (mode === 'reset') {
+                authTitle.textContent = 'Reset Password';
+                authPrimaryBtn.textContent = 'Send Reset Email';
+                authToggleLink.href = '#/signin';
+                authToggleLink.textContent = 'Go back to Sign In';
+                authResetLink.classList.add('hidden');
+                authPasswordInput.classList.add('hidden');
             }
-        }));
+            authPrimaryBtn.disabled = false;
+        };
 
-        // Auto-save logic with debounce
-        const handleInputChange = () => {
-            if (!activeNoteId || !userId) return;
+        const handlePrimaryAuthAction = async () => {
+            const email = authEmailInput.value.trim();
+            const password = authPasswordInput.value.trim();
+            const btnText = authPrimaryBtn.textContent;
+            authPrimaryBtn.disabled = true;
+            authPrimaryBtn.textContent = 'Loading...';
 
-            const title = noteTitleInput.value;
-            const tagsString = noteTagsInput.value;
-            const content = noteContentTextarea.value;
-            
-            setSaveStatus('Typing...');
-            
-            if (saveTimer) {
-                clearTimeout(saveTimer);
-            }
-
-            saveTimer = setTimeout(() => {
-                saveActiveNote(title, content, tagsString);
-            }, 1000);
-            
-            if (isMarkdownPreview) {
-                updateMarkdownView(content);
+            try {
+                if (authMode === 'signin') {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else if (authMode === 'signup') {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } else if (authMode === 'reset') {
+                    await sendPasswordResetEmail(auth, email);
+                    setAuthMessage('Password reset email sent! Check your inbox.', false);
+                    authPrimaryBtn.textContent = btnText;
+                    authPrimaryBtn.disabled = false;
+                    return; 
+                }
+            } catch (error) {
+                let message = "An unknown error occurred.";
+                if (error.code) {
+                    switch (error.code) {
+                        case 'auth/invalid-email': message = 'Invalid email format.'; break;
+                        case 'auth/user-not-found': message = 'User not found.'; break;
+                        case 'auth/wrong-password': message = 'Invalid password.'; break;
+                        case 'auth/email-already-in-use': message = 'Email already in use.'; break;
+                        case 'auth/weak-password': message = 'Password should be at least 6 characters.'; break;
+                        default: message = `Error: ${error.message}`;
+                    }
+                }
+                setAuthMessage(message);
+                authPrimaryBtn.textContent = btnText;
+                authPrimaryBtn.disabled = false;
             }
         };
 
-        noteTitleInput.addEventListener('input', handleInputChange);
-        noteTagsInput.addEventListener('input', handleInputChange);
-        noteContentTextarea.addEventListener('input', handleInputChange);
+        const handleGoogleSignIn = async () => {
+            authGoogleBtn.disabled = true;
+            authGoogleBtn.textContent = 'Loading...';
+            try {
+                await signInWithPopup(auth, googleProvider);
+            } catch (error) {
+                console.error("Google Sign In Error:", error);
+                setAuthMessage('Google sign-in failed.', true);
+                authGoogleBtn.textContent = 'Sign in with Google';
+                authGoogleBtn.disabled = false;
+            }
+        };
 
-        // Feature Button Handlers
-        toggleSidebarBtn.addEventListener('click', toggleSidebar);
-        markdownToggleBtn.addEventListener('click', () => toggleMarkdownPreview());
+        const handleSignOut = async () => {
+            signoutBtn.disabled = true;
+            try {
+                activeNoteId = null; 
+                window.location.hash = '#/';
+                await signOut(auth);
+                signoutBtn.disabled = false;
+            } catch (error) {
+                console.error("Sign Out Error:", error);
+                showConfirmationModal({
+                    title: "Sign Out Failed",
+                    message: `Failed to sign out: ${error.message}`,
+                    confirmText: "Close",
+                    confirmClass: "bg-indigo-600 hover:bg-indigo-700",
+                    onConfirm: hideModal,
+                    showCancel: false
+                });
+                signoutBtn.disabled = false;
+            }
+        };
+
+        // --- ROUTING & UI MANAGEMENT ---
+
+        const handleRouting = () => {
+            let hash = window.location.hash || '#/';
+            document.title = "Secure Cloud Notes";
+            
+            if (!isAuthReady) return; 
+            
+            const isSharedRoute = hash.startsWith('#/shared/');
+
+            if (isSharedRoute) {
+                appContainer.classList.add('hidden');
+                authOverlay.classList.add('hidden');
+                sharedViewerContainer.classList.remove('hidden');
+                const sharedId = hash.substring(9);
+                renderSharedNote(sharedId);
+                hideLoadingSpinner(); 
+                return;
+            } else {
+                 sharedViewerContainer.classList.add('hidden');
+            }
+
+
+            if (userId) {
+                // AUTHENTICATED USER FLOW
+                authOverlay.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+                
+                if (hash.startsWith('#/notes/')) {
+                    const noteId = hash.substring(8);
+                    setActiveNote(noteId); 
+                } else {
+                    setActiveNote(null); 
+                }
+
+            } else {
+                // UNAUTHENTICATED USER FLOW
+                appContainer.classList.add('hidden');
+                authOverlay.classList.remove('hidden');
+
+                if (hash === '#/signup') {
+                    setAuthMode('signup');
+                } else if (hash === '#/reset') {
+                    setAuthMode('reset');
+                } else {
+                    setAuthMode('signin');
+                    window.location.hash = '#/signin'; 
+                }
+            }
+            
+            hideLoadingSpinner(); 
+        };
+
+        // --- FIRESTORE OPERATIONS ---
+
+        const getNotesCollectionRef = () => {
+            if (!db || !userId) return null;
+            // Use projectId from config instead of __app_id placeholder outside canvas env
+            const effectiveAppId = firebaseConfig.projectId; 
+            const path = `artifacts/${effectiveAppId}/users/${userId}/notes`;
+            return collection(db, path);
+        };
         
-        // Markdown Toolbar Handler (NEW)
-        document.querySelectorAll('.format-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const format = button.dataset.format;
-                switch(format) {
-                    case 'bold':
-                        insertAtCursor('**', 'bold text');
-                        break;
-                    case 'italic':
-                        insertAtCursor('*', 'italic text');
-                        break;
-                    case 'h1':
-                        insertAtCursor('# ', 'Heading 1\n');
-                        break;
-                    case 'h2':
-                        insertAtCursor('## ', 'Heading 2\n');
-                        break;
-                    case 'list':
-                        insertAtCursor('* ', 'List Item');
-                        break;
-                    case 'code':
-                        insertAtCursor('`', 'inline code');
-                        break;
-                    case 'block':
-                        insertAtCursor('\n```\n', '\n// code block\n```');
-                        break;
-                    case 'link':
-                        insertAtCursor('[', 'link text');
-                        insertAtCursor('](', 'url)');
-                        break;
+        const getSharedCollectionRef = () => {
+            if (!db) return null;
+            const effectiveAppId = firebaseConfig.projectId;
+            const path = `artifacts/${effectiveAppId}/public/data/shared_notes`;
+            return collection(db, path);
+        };
+
+        const startNoteListener = () => {
+            const notesRef = getNotesCollectionRef();
+            if (!notesRef) return;
+            
+            if (unsubscribeNotes) {
+                unsubscribeNotes();
+            }
+
+            const q = query(notesRef);
+
+            unsubscribeNotes = onSnapshot(q, (snapshot) => {
+                const newNotes = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                    // Bug fix: ensure tags is always an array
+                    tags: Array.isArray(doc.data().tags) ? doc.data().tags : [], 
+                    updatedAt: doc.data().updatedAt?.toDate() || new Date(0)
+                }));
+
+                notesData = newNotes;
+                renderNoteList();
+
+                // If the active note was deleted by another client/device, navigate home
+                if (activeNoteId && !notesData.find(note => note.id === activeNoteId)) {
+                    window.location.hash = '#/';
+                }
+                
+                if (activeNoteId) {
+                    // Update editor content in case of external modification
+                    setActiveNote(activeNoteId); 
+                }
+
+                if (!isNotesLoaded) {
+                    isNotesLoaded = true;
+                    hideLoadingSpinner();
+                }
+
+            }, (error) => {
+                console.error("Error listening to notes:", error);
+                setSaveStatus('Error!');
+                if (!isNotesLoaded) {
+                     isNotesLoaded = true;
+                     hideLoadingSpinner();
                 }
             });
-        });
+        };
 
+        const createNewNote = async () => {
+            if (!userId) return;
 
-        // Share Modal Handlers
-        shareModalCloseBtn.addEventListener('click', () => {
-            shareModalOverlay.classList.add('hidden');
-            shareModalOverlay.classList.remove('flex');
-        });
-        copyShareUrlBtn.addEventListener('click', () => {
-            shareUrlInput.select();
-            shareUrlInput.setSelectionRange(0, 99999); 
-            document.execCommand('copy');
-            copyShareUrlBtn.textContent = 'Copied!';
-            setTimeout(() => {
-                copyShareUrlBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4 mr-2"></i> Copy';
-                lucide.createIcons();
-            }, 2000);
-        });
+            const notesRef = getNotesCollectionRef();
+            if (!notesRef) return;
 
-
-        // Mobile back button routes to list
-        backToListBtn.addEventListener('click', () => {
-            window.location.hash = '#/';
-            if (window.innerWidth < 768) {
-                noteEditorContainer.classList.add('hidden');
-                notesListContainer.classList.remove('hidden');
+            try {
+                const newNote = {
+                    title: "New Note",
+                    content: "This note supports **Markdown** formatting.",
+                    tags: [], 
+                    updatedAt: serverTimestamp(),
+                    isShared: false,
+                    sharedId: null 
+                };
+                const docRef = await addDoc(notesRef, newNote);
+                window.location.hash = `#/notes/${docRef.id}`;
+            } catch (error) {
+                console.error("Error creating new note:", error);
             }
-        });
-    };
+        };
 
+        const setSaveStatus = (status) => {
+            saveStatus = status;
+            let text = status;
+            let color = 'text-gray-400'; // Default gray for dark/light mode
+            
+            if (status === 'Typing...') {
+                text = 'Typing...';
+                color = isDarkMode ? 'text-gray-300' : 'text-gray-500';
+            } else if (status === 'Saving...') {
+                text = 'Saving...';
+                color = 'text-indigo-500';
+            } else if (status === 'Saved') {
+                text = 'Saved';
+                color = 'text-green-600';
+            } else if (status === 'Error!') {
+                text = 'Error! (Check console)';
+                color = 'text-red-500';
+            }
+            
+            saveStatusSpan.textContent = text;
+            saveStatusSpan.className = `text-xs font-medium ${color}`;
+        };
 
-    // --- APPLICATION START ---
+        const saveActiveNote = async (title, content, tagsString) => {
+            if (!activeNoteId || !userId) return;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        initializeDarkMode(); 
+            const notesRef = getNotesCollectionRef();
+            if (!notesRef) return;
+            
+            const activeNote = notesData.find(note => note.id === activeNoteId);
+            const isShared = activeNote?.isShared === true;
+            const newTagsArray = parseTags(tagsString);
+
+            try {
+                setSaveStatus('Saving...');
+                const noteDocRef = doc(notesRef, activeNoteId);
+                
+                const updatePayload = {
+                    title: title || '(No Title)',
+                    content: content,
+                    tags: newTagsArray,
+                    updatedAt: serverTimestamp()
+                };
+
+                await updateDoc(noteDocRef, updatePayload);
+
+                if (isShared && activeNote.sharedId) {
+                    // Update the public, read-only copy
+                    const sharedRef = getSharedCollectionRef();
+                    const sharedDocRef = doc(sharedRef, activeNote.sharedId);
+                    await updateDoc(sharedDocRef, updatePayload);
+                }
+                
+                // Firestore listener will fire, but we set a temp status first
+                setSaveStatus('Saved');
+            } catch (error) {
+                console.error("Error saving note:", error);
+                setSaveStatus('Error!');
+            }
+        };
         
-        if (!window.location.hash) {
-            window.location.hash = '#/';
+        const shareActiveNote = async () => {
+            if (!activeNoteId || !userId) return;
+
+            const activeNote = notesData.find(note => note.id === activeNoteId);
+            if (!activeNote) return;
+
+            const sharedRef = getSharedCollectionRef();
+            const notesRef = getNotesCollectionRef();
+
+            try {
+                dynamicShareBtn.disabled = true;
+                dynamicShareBtn.title = "Sharing...";
+
+                const baseData = {
+                    title: activeNote.title || '(No Title)',
+                    content: activeNote.content || '',
+                    tags: activeNote.tags || [],
+                    authorId: userId, 
+                    authorName: auth.currentUser?.email || 'Anonymous',
+                    updatedAt: serverTimestamp(),
+                };
+
+                let sharedId = activeNote.sharedId;
+
+                if (activeNote.isShared && activeNote.sharedId) {
+                    // Update existing shared doc
+                    const sharedDocRef = doc(sharedRef, activeNote.sharedId);
+                    await updateDoc(sharedDocRef, baseData);
+                } else {
+                    // Create new shared doc
+                    const sharedDocRef = await addDoc(sharedRef, baseData);
+                    sharedId = sharedDocRef.id;
+
+                    // Update local doc with shared info
+                    const noteDocRef = doc(notesRef, activeNoteId);
+                    await updateDoc(noteDocRef, {
+                        isShared: true,
+                        sharedId: sharedId,
+                    });
+                }
+                
+                const shareUrl = `${window.location.origin}${window.location.pathname}#/shared/${sharedId}`;
+                shareUrlInput.value = shareUrl;
+                shareModalOverlay.classList.remove('hidden');
+                shareModalOverlay.classList.add('flex');
+                
+                dynamicShareBtn.disabled = false;
+                // Listener will trigger setActiveNote and update button icon
+            } catch (error) {
+                console.error("Error sharing note:", error);
+                showConfirmationModal({
+                    title: "Sharing Failed",
+                    message: `Could not share note due to a permission or network error: ${error.message}`,
+                    confirmText: "Close",
+                    confirmClass: "bg-indigo-600 hover:bg-indigo-700",
+                    onConfirm: hideModal,
+                    showCancel: false
+                });
+                dynamicShareBtn.disabled = false;
+            }
+        };
+        
+        const unshareActiveNote = async () => {
+             if (!activeNoteId || !userId) return;
+
+            const activeNote = notesData.find(note => note.id === activeNoteId);
+            if (!activeNote || !activeNote.isShared || !activeNote.sharedId) return;
+            
+            const sharedRef = getSharedCollectionRef();
+            const notesRef = getNotesCollectionRef();
+            const sharedId = activeNote.sharedId;
+
+            try {
+                // Delete the public copy
+                const sharedDocRef = doc(sharedRef, sharedId);
+                await deleteDoc(sharedDocRef);
+                
+                // Update the user's private copy
+                const noteDocRef = doc(notesRef, activeNoteId);
+                await updateDoc(noteDocRef, {
+                    isShared: false,
+                    sharedId: null,
+                    updatedAt: serverTimestamp()
+                });
+                
+                // Listener will trigger setActiveNote and update button icon
+            } catch (error) {
+                console.error("Error unsharing note:", error);
+                 showConfirmationModal({
+                    title: "Unsharing Failed",
+                    message: `Could not remove the public copy: ${error.message}`,
+                    confirmText: "Close",
+                    confirmClass: "bg-indigo-600 hover:bg-indigo-700",
+                    onConfirm: hideModal,
+                    showCancel: false
+                });
+            }
+        };
+
+
+        // --- UI RENDERING & DISPLAY ---
+        
+        const renderMarkdown = (markdownText) => {
+            return marked.parse(markdownText || '');
         }
-        
-        lucide.createIcons();
-        setupEventListeners();
-        initializeFirebase();
-    });
 
-</script>
+        const getRelativeTime = (date) => {
+            if (!date || date.getTime() === 0) return 'Never';
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            let interval = seconds / 31536000;
+            if (interval > 1) return Math.floor(interval) + " years ago";
+            interval = seconds / 2592000;
+            if (interval > 1) return Math.floor(interval) + " months ago";
+            interval = seconds / 86400;
+            if (interval > 1) return Math.floor(interval) + " days ago";
+            interval = seconds / 3600;
+            if (interval > 1) return Math.floor(interval) + " hours ago";
+            interval = seconds / 60;
+            if (interval > 1) return Math.floor(interval) + " minutes ago";
+            if (seconds < 5) return "just now";
+            return Math.floor(seconds) + " seconds ago";
+        };
+
+
+        const renderNoteList = () => {
+            const term = searchTerm.toLowerCase().trim();
+            const isTagSearch = term.startsWith('#');
+            const tagTerm = isTagSearch ? term.substring(1) : '';
+
+            // Update search input appearance based on search type (NEW FEATURE ENHANCEMENT)
+            if (isTagSearch && tagTerm) {
+                searchIcon.dataset.lucide = 'hash';
+                searchIcon.classList.remove('text-gray-400', 'text-indigo-500');
+                searchIcon.classList.add('text-indigo-500');
+            } else {
+                searchIcon.dataset.lucide = 'search';
+                searchIcon.classList.remove('text-indigo-500');
+                searchIcon.classList.add('text-gray-400');
+            }
+            lucide.createIcons();
+
+
+            const filteredNotes = notesData.filter(note => {
+                if (!term) return true;
+                
+                if (isTagSearch && tagTerm) {
+                    return note.tags?.some(tag => tag.includes(tagTerm)) || false;
+                } else {
+                    // Filter by title, content, OR tags
+                    const titleMatch = note.title?.toLowerCase().includes(term);
+                    const contentMatch = note.content?.toLowerCase().includes(term);
+                    const tagMatch = note.tags?.some(tag => tag.includes(term)); // Check tags even if not starting with #
+                    return titleMatch || contentMatch || tagMatch;
+                }
+            });
+            
+            // Sort by updatedAt, newest first
+            filteredNotes.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+
+            notesListElement.innerHTML = '';
+            
+            if (filteredNotes.length === 0) {
+                notesListElement.innerHTML = `<p class="p-4 text-center text-gray-400">${term ? `No notes found matching "${term}".` : `Create your first note by clicking the '+' button!`}</p>`;
+                return;
+            }
+
+            filteredNotes.forEach(note => {
+                const isActive = note.id === activeNoteId;
+                const noteItem = document.createElement('a');
+                noteItem.href = `#/notes/${note.id}`;
+                // Fixed note list item styling for dark mode
+                noteItem.className = `p-4 mb-2 rounded-xl cursor-pointer block transition duration-150 ${isActive ? 'active bg-indigo-100 ring-2 ring-indigo-500 shadow-md' : 'bg-gray-50 hover:bg-gray-100'}`;
+                
+                // Refactored tag rendering (New Feature/Fix)
+                const tagsHtml = note.tags && note.tags.length > 0
+                    ? `<div class="mt-1 flex flex-wrap gap-1">${note.tags.map(tag => `<span class="tag-pill">#${tag}</span>`).join('')}</div>`
+                    : '';
+                
+                const contentSnippet = stripMarkdown(note.content);
+                
+                noteItem.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <h3 class="font-semibold ${isActive ? 'text-indigo-800' : 'text-gray-800'} truncate">${note.title || '(No Title)'}</h3>
+                        ${note.isShared ? '<i data-lucide="link" class="w-4 h-4 text-green-500 flex-shrink-0" title="Shared"></i>' : ''}
+                    </div>
+                    <p class="text-xs text-gray-500 mb-1">${getRelativeTime(note.updatedAt)}</p>
+                    ${tagsHtml}
+                    <p class="text-sm text-gray-600 line-clamp-2 mt-2">${contentSnippet || 'Empty note...'}</p>
+                `;
+                notesListElement.appendChild(noteItem);
+            });
+            lucide.createIcons();
+        };
+        
+        const updateMarkdownView = (content) => {
+            markdownPreviewDiv.innerHTML = renderMarkdown(content);
+        };
+
+        const toggleMarkdownPreview = (force = null) => {
+            isMarkdownPreview = force !== null ? force : !isMarkdownPreview;
+            
+            if (isMarkdownPreview) {
+                noteContentTextarea.classList.add('hidden');
+                markdownPreviewDiv.classList.remove('hidden');
+                markdownToggleBtn.innerHTML = '<i data-lucide="file-pen" class="w-5 h-5"></i>';
+                markdownToggleBtn.title = "Toggle Editing Mode";
+                updateMarkdownView(noteContentTextarea.value);
+            } else {
+                noteContentTextarea.classList.remove('hidden');
+                markdownPreviewDiv.classList.add('hidden');
+                markdownToggleBtn.innerHTML = '<i data-lucide="eye" class="w-5 h-5"></i>';
+                markdownToggleBtn.title = "Toggle Markdown Preview";
+                noteContentTextarea.focus();
+            }
+            lucide.createIcons();
+        };
+
+        const toggleSidebar = (force = null) => {
+            isSidebarOpen = force !== null ? force : !isSidebarOpen;
+            if (isSidebarOpen) {
+                // Show: full width on mobile, w-80 on desktop
+                notesListContainer.classList.remove('md:w-0', 'w-0', 'hidden');
+                notesListContainer.classList.add('md:w-80', 'w-full');
+                toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-close" class="w-5 h-5"></i>';
+            } else {
+                // Hide: w-0 and hidden on both
+                notesListContainer.classList.add('md:w-0', 'w-0', 'hidden');
+                notesListContainer.classList.remove('md:w-80', 'w-full');
+                toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-open" class="w-5 h-5"></i>';
+            }
+            lucide.createIcons();
+        };
+
+
+        const setActiveNote = (noteId) => {
+            activeNoteId = noteId;
+            const activeNote = notesData.find(note => note.id === noteId);
+
+            const isMobile = window.innerWidth < 768;
+
+            if (activeNote) {
+                // UI Setup
+                document.title = (activeNote.title || 'Untitled') + ' | Notes';
+                noteEditorContainer.classList.remove('hidden');
+                noteEditorContainer.classList.add('flex');
+                emptyEditorState.classList.add('hidden');
+                
+                // Mobile UX Fix: Hide list and show back button
+                if (isMobile) {
+                    notesListContainer.classList.add('hidden');
+                    backToListBtn.classList.remove('hidden');
+                } else {
+                    backToListBtn.classList.add('hidden');
+                }
+
+                // Data Population
+                noteTitleInput.value = activeNote.title || '';
+                noteTagsInput.value = tagsArrayToString(activeNote.tags);
+                noteContentTextarea.value = activeNote.content || '';
+                lastEditedTimeSpan.textContent = 'Last edited: ' + getRelativeTime(activeNote.updatedAt);
+                deleteNoteBtn.classList.remove('opacity-50', 'pointer-events-none');
+                
+                // Dynamic Share/Unshare Button (BUG FIX: Icon & Color)
+                dynamicShareBtn.classList.remove('opacity-50', 'pointer-events-none');
+                dynamicShareBtn.classList.remove('text-green-600', 'hover:bg-green-50', 'text-red-600', 'hover:bg-red-50');
+                
+                if (activeNote.isShared) {
+                    // Unshare action (red color, rotated icon)
+                    dynamicShareBtn.innerHTML = '<i data-lucide="link-2-off" class="w-5 h-5"></i>'; // Using link-2-off for unshare
+                    dynamicShareBtn.title = "Unshare Note (Delete Public Link)";
+                    dynamicShareBtn.classList.add('text-red-600', 'hover:bg-red-50'); 
+                    dynamicShareBtn.onclick = () => showConfirmationModal({
+                        title: "Confirm Unshare",
+                        message: "Are you sure you want to unshare this note? The public link will stop working immediately, and the read-only copy will be permanently deleted.",
+                        confirmText: "Unshare",
+                        confirmClass: "bg-red-600 hover:bg-red-700",
+                        onConfirm: unshareActiveNote
+                    });
+                } else {
+                    // Share action (green color, standard icon)
+                    dynamicShareBtn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5"></i>';
+                    dynamicShareBtn.title = "Share Note (Create Public Link)";
+                    dynamicShareBtn.classList.add('text-green-600', 'hover:bg-green-50');
+                    dynamicShareBtn.onclick = shareActiveNote;
+                }
+
+                setSaveStatus('Saved');
+                toggleMarkdownPreview(false);
+                noteTitleInput.focus();
+
+            } else {
+                // Clear and hide editor
+                noteTitleInput.value = '';
+                noteTagsInput.value = '';
+                noteContentTextarea.value = '';
+                lastEditedTimeSpan.textContent = 'Last edited: --';
+                deleteNoteBtn.classList.add('opacity-50', 'pointer-events-none');
+                dynamicShareBtn.classList.add('opacity-50', 'pointer-events-none');
+                setSaveStatus('');
+                
+                // Mobile UX Fix: Show list, hide editor view
+                if (isMobile) {
+                    notesListContainer.classList.remove('hidden');
+                    noteEditorContainer.classList.add('hidden');
+                    emptyEditorState.classList.add('hidden'); 
+                    backToListBtn.classList.add('hidden');
+                } else {
+                    notesListContainer.classList.remove('hidden');
+                    noteEditorContainer.classList.add('hidden');
+                    emptyEditorState.classList.remove('hidden');
+                }
+                document.title = "Secure Cloud Notes";
+            }
+
+            renderNoteList();
+            lucide.createIcons();
+        };
+        
+        const renderSharedNote = async (sharedId) => {
+            const sharedRef = getSharedCollectionRef();
+            const sharedDocRef = doc(sharedRef, sharedId);
+            
+            sharedTitle.textContent = 'Loading Note...';
+            sharedMeta.textContent = '';
+            sharedMarkdownContent.innerHTML = '';
+            
+            try {
+                const docSnap = await getDoc(sharedDocRef);
+                
+                if (docSnap.exists()) {
+                    const note = docSnap.data();
+                    
+                    document.title = (note.title || 'Untitled Shared Note');
+                    sharedTitle.textContent = note.title || 'Untitled Note';
+                    
+                    const timeString = note.updatedAt ? new Date(note.updatedAt.toDate()).toLocaleString() : 'N/A';
+                    
+                    // Use new tag pill style
+                    const tagsHtml = note.tags && note.tags.length > 0
+                        ? `<div class="mt-2 mb-4 flex flex-wrap gap-2">${note.tags.map(tag => `<span class="tag-pill text-xs px-2 py-1">${tag}</span>`).join('')}</div>`
+                        : '';
+                        
+                    sharedMeta.innerHTML = `Shared by ${note.authorName || 'a user'} | Last updated: ${timeString} ${tagsHtml}`;
+                    
+                    sharedMarkdownContent.innerHTML = renderMarkdown(note.content || '');
+                } else {
+                    sharedTitle.textContent = 'Note Not Found (404)';
+                    sharedMeta.textContent = 'The shared note link is invalid or the note has been deleted by the owner.';
+                    sharedMarkdownContent.innerHTML = '';
+                }
+            } catch (error) {
+                console.error("Error loading shared note:", error);
+                sharedTitle.textContent = 'An Error Occurred';
+                sharedMeta.textContent = 'Could not load note due to a connection error.';
+                sharedMarkdownContent.innerHTML = `<p class="text-red-500">${error.message}</p>`;
+            } finally {
+                hideLoadingSpinner();
+            }
+        };
+
+
+        // --- REUSABLE MODAL/DIALOG LOGIC ---
+        let currentModalAction = null;
+
+        const showConfirmationModal = ({ title, message, confirmText, confirmClass, onConfirm, showCancel = true }) => {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            modalConfirmBtn.textContent = confirmText;
+            
+            modalConfirmBtn.className = "px-4 py-2 text-white rounded-lg transition duration-150 " + (confirmClass || "bg-red-600 hover:bg-red-700");
+            
+            if (showCancel) {
+                modalCancelBtn.classList.remove('hidden');
+            } else {
+                modalCancelBtn.classList.add('hidden');
+            }
+
+            currentModalAction = onConfirm;
+
+            modalOverlay.classList.remove('hidden');
+            modalOverlay.classList.add('flex');
+        };
+
+        const hideModal = () => {
+            modalOverlay.classList.add('hidden');
+            modalOverlay.classList.remove('flex');
+            currentModalAction = null;
+        };
+        
+        // --- EVENT HANDLERS ---
+
+        const setupEventListeners = () => {
+            window.addEventListener('hashchange', handleRouting);
+            window.addEventListener('resize', () => {
+                // Ensure correct state on window resize (especially for mobile/desktop transition)
+                handleRouting();
+                renderNoteList();
+            });
+            
+            // Dark Mode Toggle
+            darkModeToggleBtn.addEventListener('click', toggleDarkMode);
+            
+            // Auth Events
+            authPrimaryBtn.addEventListener('click', handlePrimaryAuthAction);
+            authGoogleBtn.addEventListener('click', handleGoogleSignIn);
+            
+            // Auth hash links (BUG FIX: using setAuthMode to ensure correct UI state)
+            authToggleLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newHash = e.target.getAttribute('href');
+                window.location.hash = newHash;
+                setAuthMode(newHash.substring(2));
+            });
+            authResetLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = e.target.getAttribute('href');
+                setAuthMode('reset');
+            });
+
+
+            // Modal Events
+            modalCancelBtn.addEventListener('click', hideModal);
+            modalConfirmBtn.addEventListener('click', async () => {
+                if (currentModalAction) {
+                    await currentModalAction();
+                }
+                hideModal();
+            });
+
+            // App Events
+            signoutBtn.addEventListener('click', handleSignOut);
+            newNoteBtn.addEventListener('click', createNewNote);
+            
+            // Search Input (Tag Filtering Enhancement)
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                renderNoteList();
+            });
+
+
+            // Delete handler
+            deleteNoteBtn.addEventListener('click', () => showConfirmationModal({
+                title: "Confirm Deletion",
+                message: "Are you sure you want to delete this note? This action cannot be undone and will also delete the public sharing link if one exists.",
+                confirmText: "Delete Permanently",
+                confirmClass: "bg-red-600 hover:bg-red-700",
+                onConfirm: async () => {
+                     if (!activeNoteId || !userId) return;
+                    const notesRef = getNotesCollectionRef();
+                    const activeNote = notesData.find(note => note.id === activeNoteId);
+                    if (!notesRef || !activeNote) return;
+
+                    try {
+                        if (activeNote.isShared && activeNote.sharedId) {
+                            const sharedRef = getSharedCollectionRef();
+                            await deleteDoc(doc(sharedRef, activeNote.sharedId));
+                        }
+                        await deleteDoc(doc(notesRef, activeNoteId));
+                        window.location.hash = '#/';
+                    } catch (error) {
+                        console.error("Error deleting note:", error);
+                        setSaveStatus('Error!');
+                    }
+                }
+            }));
+
+            // Auto-save logic with debounce
+            const handleInputChange = () => {
+                if (!activeNoteId || !userId) return;
+
+                const title = noteTitleInput.value;
+                const tagsString = noteTagsInput.value;
+                const content = noteContentTextarea.value;
+                
+                setSaveStatus('Typing...');
+                
+                if (saveTimer) {
+                    clearTimeout(saveTimer);
+                }
+
+                saveTimer = setTimeout(() => {
+                    saveActiveNote(title, content, tagsString);
+                }, 1000);
+                
+                if (isMarkdownPreview) {
+                    updateMarkdownView(content);
+                }
+            };
+
+            noteTitleInput.addEventListener('input', handleInputChange);
+            noteTagsInput.addEventListener('input', handleInputChange);
+            noteContentTextarea.addEventListener('input', handleInputChange);
+
+            // Feature Button Handlers
+            toggleSidebarBtn.addEventListener('click', toggleSidebar);
+            markdownToggleBtn.addEventListener('click', () => toggleMarkdownPreview());
+
+            // Share Modal Handlers
+            shareModalCloseBtn.addEventListener('click', () => {
+                shareModalOverlay.classList.add('hidden');
+                shareModalOverlay.classList.remove('flex');
+            });
+            // Using execCommand for wider compatibility (GitHub Pages context)
+            copyShareUrlBtn.addEventListener('click', () => {
+                shareUrlInput.select();
+                shareUrlInput.setSelectionRange(0, 99999); 
+                document.execCommand('copy');
+                copyShareUrlBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4 mr-2"></i> Copied!';
+                lucide.createIcons();
+                setTimeout(() => {
+                    copyShareUrlBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4 mr-2"></i> Copy';
+                    lucide.createIcons();
+                }, 2000);
+            });
+
+
+            // Mobile back button routes to list (Mobile UX Fix)
+            backToListBtn.addEventListener('click', () => {
+                window.location.hash = '#/';
+                // Mobile UX Fix: Force hiding editor and showing list on mobile
+                if (window.innerWidth < 768) {
+                    noteEditorContainer.classList.add('hidden');
+                    notesListContainer.classList.remove('hidden');
+                }
+            });
+        };
+
+
+        // --- APPLICATION START ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDarkMode(); // Initialize dark mode first
+            
+            if (!window.location.hash) {
+                window.location.hash = '#/';
+            }
+            
+            lucide.createIcons();
+            setupEventListeners();
+            initializeFirebase();
+        });
+
+    </script>
 </body>
 </html>
+

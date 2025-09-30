@@ -19,62 +19,104 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- Dark Mode Colors --- */
+        /* --- Dark Mode Colors FIXES --- */
         body.dark {
-            background-color: #111827; /* gray-900 */
-            color: #d1d5db; /* gray-300 */
+            background-color: #0d1117; /* Even darker background (GitHub dark theme style) */
+            color: #c9d1d9; /* Light gray text */
         }
 
         body.dark #note-list-container, body.dark #auth-overlay > div, body.dark #shared-viewer-container {
-            background-color: #1f2937; /* gray-800 */
-            border-color: #374151; /* gray-700 */
-            color: #f3f4f6; /* gray-100 */
+            background-color: #161b22; /* Darker container background */
+            border-color: #30363d; /* Dark border */
+            color: #c9d1d9;
         }
         
         body.dark #auth-overlay {
-            background-color: #111827; /* gray-900 */
+            background-color: #0d1117;
         }
 
+        /* Note list item default state */
         body.dark .notes-list a:not(.active), body.dark #empty-editor-state {
-            background-color: #1f2937; /* gray-800 */
+            background-color: #161b22;
         }
         
         body.dark .notes-list a:not(.active):hover {
-            background-color: #374151; /* gray-700 */
+            background-color: #30363d; /* Dark hover */
         }
 
+        /* Active note contrast FIX */
         body.dark .notes-list a.active {
             background-color: #4f46e520; /* indigo-600 with opacity */
+            box-shadow: 0 0 0 2px #4f46e5;
+        }
+        body.dark .notes-list a.active h3 {
+             color: #c7d2fe; /* indigo-200 */
+        }
+        body.dark .notes-list a.active p {
+             color: #9ca3af; /* gray-400 */
         }
 
-        body.dark .border-gray-200 { border-color: #374151; }
-        body.dark .bg-gray-50 { background-color: #1f2937; }
+        /* General element color overrides for dark mode */
+        body.dark .border-gray-200 { border-color: #30363d; }
+        body.dark .bg-gray-50 { background-color: #161b22; }
         body.dark .text-gray-900 { color: #f3f4f6; }
-        body.dark .text-gray-700 { color: #d1d5db; }
+        body.dark .text-gray-700 { color: #c9d1d9; }
         body.dark .text-gray-600 { color: #9ca3af; }
         body.dark .text-gray-500 { color: #6b7280; }
         body.dark .text-gray-400 { color: #4b5563; }
-        body.dark .text-gray-300 { color: #374151; }
+        
+        /* Input & Textarea FIX: Ensure full override */
         body.dark input, body.dark textarea {
-            background-color: #1f2937 !important;
-            border-color: #374151 !important;
+            background-color: #161b22 !important; 
+            border-color: #30363d !important; 
+            color: #f3f4f6 !important; 
+        }
+        body.dark input::placeholder, body.dark textarea::placeholder {
+            color: #6b7280; /* gray-500 */
         }
         body.dark input:focus, body.dark textarea:focus {
-            background-color: #1f2937 !important;
+            background-color: #161b22 !important;
         }
         
         /* Dark mode markdown styling */
         body.dark .markdown-viewer pre {
-            background-color: #111827; /* gray-900 */
-            border: 1px solid #374151;
+            background-color: #0d1117; /* gray-900 */
+            border: 1px solid #30363d;
         }
         body.dark .markdown-viewer code {
-            background-color: #374151;
+            background-color: #30363d;
+            color: #c9d1d9;
+        }
+        
+        /* Modal Fixes */
+        body.dark #modal-overlay > div, body.dark #share-modal-overlay > div {
+            background-color: #161b22; 
             color: #f3f4f6;
         }
-        body.dark #note-title { color: #f3f4f6; }
-        body.dark #note-tags-input { color: #9ca3af; }
-
+        body.dark #modal-title, body.dark #share-modal-overlay h3 {
+             color: #f3f4f6;
+        }
+        body.dark #share-url-input {
+            background-color: #30363d !important;
+            border-color: #4b5563 !important;
+            color: #f3f4f6 !important;
+        }
+        
+        /* Tag Pill Styling FIX (New) */
+        .tag-pill {
+            display: inline-flex;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 9999px;
+            font-weight: 500;
+            margin-right: 4px;
+            background-color: #e0e7ff; /* light: indigo-100 */
+            color: #4f46e5; /* light: indigo-600 */
+        }
+        body.dark .tag-pill {
+            background-color: #374151; /* dark: gray-700 */
+            color: #c7d2fe; /* dark: indigo-200 */
+        }
 
         /* Custom scrollbar for better aesthetics */
         .notes-list::-webkit-scrollbar, .editor-content::-webkit-scrollbar, .markdown-viewer::-webkit-scrollbar {
@@ -82,20 +124,20 @@
         }
 
         .notes-list::-webkit-scrollbar-thumb, .editor-content::-webkit-scrollbar-thumb, .markdown-viewer::-webkit-scrollbar-thumb {
-            background: #d1d5db; /* gray-300 */
+            background: #d1d5db;
             border-radius: 3px;
         }
 
         .notes-list::-webkit-scrollbar-thumb:hover, .editor-content::-webkit-scrollbar-thumb:hover, .markdown-viewer::-webkit-scrollbar-thumb:hover {
-            background: #9ca3af; /* gray-400 */
+            background: #9ca3af;
         }
 
         body.dark .notes-list::-webkit-scrollbar-thumb, body.dark .editor-content::-webkit-scrollbar-thumb, body.dark .markdown-viewer::-webkit-scrollbar-thumb {
-            background: #4b5563; /* gray-600 */
+            background: #4b5563;
         }
         
         body.dark .notes-list::-webkit-scrollbar-thumb:hover, body.dark .editor-content::-webkit-scrollbar-thumb:hover, body.dark .markdown-viewer::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* gray-500 */
+            background: #6b7280;
         }
 
         
@@ -112,7 +154,7 @@
             margin-bottom: 1em;
         }
         .markdown-viewer pre {
-            background-color: #f3f4f6; /* light mode: gray-100 */
+            background-color: #f3f4f6;
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
@@ -125,11 +167,15 @@
             border-radius: 4px;
         }
         
+        /* Ensure editor content takes full available height */
+        #note-content {
+            min-height: calc(100% - 150px); /* Adjust based on title/tag input height */
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <!-- *** 1. Loading Spinner Overlay (Always visible initially) *** -->
+    <!-- *** 1. Loading Spinner Overlay *** -->
     <div id="loading-spinner-overlay" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-[300]">
         <div class="flex flex-col items-center">
             <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-t-indigo-500 border-gray-200 mb-3"></div>
@@ -144,8 +190,9 @@
             
             <div id="auth-message" class="text-sm text-center text-red-500 mb-4 hidden"></div>
 
-            <input id="auth-email" type="email" placeholder="Email" class="w-full mb-3 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-900">
-            <input id="auth-password" type="password" placeholder="Password" class="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-900">
+            <!-- Inputs will inherit dark mode color via global CSS rules -->
+            <input id="auth-email" type="email" placeholder="Email" class="w-full mb-3 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
+            <input id="auth-password" type="password" placeholder="Password" class="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
 
             <button id="auth-primary-btn" class="w-full py-3 mb-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150 active:scale-[.99]">
                 Sign In
@@ -192,11 +239,12 @@
     <div id="app" class="flex flex-1 overflow-hidden h-screen hidden">
         
         <!-- Note List (Sidebar) -->
+        <!-- Responsive layout: w-full on mobile, fixed w-80 on desktop/tablet -->
         <div id="note-list-container" class="w-full md:w-80 border-r border-gray-200 bg-white flex flex-col transition-transform duration-300 ease-in-out md:static absolute inset-0 z-10">
-            <div class="p-4 border-b border-gray-200 shadow-sm flex justify-between items-center">
+            <div class="p-4 border-b border-gray-200 shadow-sm flex justify-between items-center bg-white">
                 <h1 class="text-2xl font-bold text-gray-900">My Notes</h1>
                 <div class="flex space-x-2 items-center">
-                    <!-- Dark Mode Toggle -->
+                    <!-- Dark Mode Toggle (Fixed in place) -->
                     <button id="dark-mode-toggle" title="Toggle Dark Mode" class="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition duration-150 active:scale-95">
                         <i data-lucide="sun" class="w-5 h-5"></i>
                     </button>
@@ -210,7 +258,7 @@
             </div>
 
             <!-- Search Input -->
-            <div class="p-4 border-b border-gray-100">
+            <div class="p-4 border-b border-gray-100 bg-white">
                  <div class="relative">
                     <i id="search-icon" data-lucide="search" class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     <input id="search-input" type="text" placeholder="Search notes or #tag..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-700">
@@ -221,18 +269,18 @@
                 <!-- Notes will be injected here -->
             </div>
 
-            <div class="p-2 text-xs text-gray-500 border-t border-gray-100 text-center">
+            <div class="p-2 text-xs text-gray-500 border-t border-gray-100 text-center bg-white">
                 <p>User ID: <span id="user-id-display" class="font-mono text-indigo-500 break-all">...</span></p>
             </div>
         </div>
 
         <!-- Note Editor -->
         <div id="note-editor-container" class="flex-1 flex-col bg-white md:flex hidden">
-            <!-- Editor Header -->
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shadow-sm">
+            <!-- Editor Header (Sticky for mobile UX) -->
+            <div class="sticky top-0 z-10 p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shadow-md">
                 <div class="flex items-center space-x-3">
                     <!-- Back to list button (Mobile only) -->
-                    <button id="back-to-list-btn" class="text-indigo-600 md:hidden p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition duration-150">
+                    <button id="back-to-list-btn" title="Back to Notes" class="text-indigo-600 md:hidden p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition duration-150">
                         <i data-lucide="arrow-left" class="w-5 h-5"></i>
                     </button>
                     <!-- Sidebar Toggle (Desktop/Tablet) -->
@@ -264,17 +312,18 @@
             </div>
 
             <!-- Editor Body -->
-            <div id="editor-body" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <div id="editor-body" class="flex-1 flex flex-col overflow-y-auto p-6 space-y-4">
                 <input id="note-title" type="text" placeholder="Title your note (supports markdown)" class="w-full text-3xl font-bold border-none focus:ring-0 focus:outline-none placeholder-gray-300 p-0 text-gray-900 bg-transparent">
                 
                 <!-- Tags Input -->
-                <input id="note-tags-input" type="text" placeholder="Tags (e.g., work, project, #idea)" class="w-full text-sm border-none focus:ring-0 focus:outline-none placeholder-gray-400 p-0 text-gray-500 border-b pb-2 bg-transparent">
+                <input id="note-tags-input" type="text" placeholder="Tags (e.g., work, project, #idea) - Max 10" class="w-full text-sm border-none focus:ring-0 focus:outline-none placeholder-gray-400 p-0 text-gray-500 border-b pb-2 bg-transparent">
 
                 <!-- Raw Markdown Textarea (Default View) -->
-                <textarea id="note-content" placeholder="Start typing here... supports **Markdown**!" class="editor-content w-full h-full text-lg border-none focus:ring-0 focus:outline-none resize-none placeholder-gray-400 p-0 text-gray-700 bg-transparent"></textarea>
+                <!-- Use h-full to ensure it takes remaining space, flex-1 in container handles scroll -->
+                <textarea id="note-content" placeholder="Start typing here... supports **Markdown**!" class="editor-content w-full flex-1 text-lg border-none focus:ring-0 focus:outline-none resize-none placeholder-gray-400 p-0 text-gray-700 bg-transparent"></textarea>
 
                 <!-- Markdown Preview Div (Hidden by Default) -->
-                <div id="markdown-preview" class="markdown-viewer w-full h-full text-lg p-0 text-gray-700 hidden"></div>
+                <div id="markdown-preview" class="markdown-viewer w-full flex-1 text-lg p-0 text-gray-700 hidden"></div>
             </div>
         </div>
 
@@ -326,6 +375,7 @@
 
         setLogLevel('Debug');
 
+        // Note: Using a mock config since this is hosted on GitHub Pages
         const PROVIDED_FIREBASE_CONFIG = {
             apiKey: "AIzaSyBqObkmL_fZeeAoaS4weJGx7VU4CskppuQ",
             authDomain: "cloudnote-be55c.firebaseapp.com",
@@ -347,7 +397,7 @@
         let userId = null;
         let isAuthReady = false; 
         let isNotesLoaded = false; 
-        let isDarkMode = false; // NEW: Dark Mode State
+        let isDarkMode = false; 
 
         let notesData = [];
         let activeNoteId = null;
@@ -394,7 +444,7 @@
         const copyShareUrlBtn = document.getElementById('copy-share-url-btn');
         const shareModalCloseBtn = document.getElementById('share-modal-close-btn');
         const toggleSidebarBtn = document.getElementById('toggle-sidebar-btn');
-        const darkModeToggleBtn = document.getElementById('dark-mode-toggle'); // NEW: Dark Mode Button
+        const darkModeToggleBtn = document.getElementById('dark-mode-toggle'); 
 
         // Shared Viewer Elements
         const sharedViewerContainer = document.getElementById('shared-viewer-container');
@@ -423,8 +473,9 @@
         
         const parseTags = (tagString) => {
             if (!tagString) return [];
+            // Remove hashtags before splitting, then trim/filter
             return tagString.split(',')
-                .map(tag => tag.trim().toLowerCase())
+                .map(tag => tag.replace(/#/g, '').trim().toLowerCase()) 
                 .filter(tag => tag.length > 0)
                 .slice(0, 10); // Limit to 10 tags
         };
@@ -437,25 +488,34 @@
         // Helper to strip markdown for list preview
         const stripMarkdown = (markdownText) => {
             if (!markdownText) return '';
-            // Remove headers, bold/italic markers, links, images, and excessive whitespace
             let stripped = markdownText
-                .replace(/([#*-])/g, '') // Remove Markdown special characters
-                .replace(/(\[[^\]]*\]\([^\)]*\))/g, '') // Remove [links](url)
-                .replace(/(\n+)/g, ' ') // Replace newlines with single space
+                .replace(/([#*-])/g, '') 
+                .replace(/(\[[^\]]*\]\([^\)]*\))/g, '') 
+                .replace(/(\n+)/g, ' ') 
                 .trim();
-            return stripped.substring(0, 100).trim(); // Truncate and clean
+            return stripped.substring(0, 100).trim(); 
         };
 
 
-        // --- DARK MODE LOGIC (NEW FEATURE) ---
+        // --- DARK MODE LOGIC (Theme Persistence Fix) ---
         const initializeDarkMode = () => {
+            // 1. Check local storage preference
             const savedMode = localStorage.getItem('notesAppDarkMode');
+            
             if (savedMode === 'true') {
                 isDarkMode = true;
+            } else if (savedMode === 'false') {
+                isDarkMode = false;
             } else {
+                // 2. Fallback to system preference
                 isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
             }
+            
+            // 3. Apply immediately before rendering content
             applyDarkMode(isDarkMode);
+            // Hide the spinner background now that we know the initial theme
+            loadingSpinnerOverlay.classList.remove('bg-gray-50', 'dark:bg-[#111827]');
+            loadingSpinnerOverlay.classList.add(isDarkMode ? 'bg-[#111827]' : 'bg-gray-50');
         };
 
         const applyDarkMode = (enabled) => {
@@ -469,8 +529,11 @@
                 darkModeToggleBtn.innerHTML = '<i data-lucide="sun" class="w-5 h-5"></i>';
                 darkModeToggleBtn.title = "Toggle Dark Mode";
             }
+            // Save preference to local storage
             localStorage.setItem('notesAppDarkMode', isDarkMode);
             lucide.createIcons();
+            // Re-render note list to fix styles
+            if(userId) renderNoteList();
         };
 
         const toggleDarkMode = () => {
@@ -522,7 +585,6 @@
                     }
                 }
                 
-                // Hide spinner once auth state is confirmed and notes (or lack thereof) are handled
                 handleRouting();
             });
         };
@@ -540,15 +602,6 @@
             authEmailInput.value = '';
             authPasswordInput.value = '';
             authMessage.classList.add('hidden');
-            
-            // Set input styles based on current mode
-            const isDark = bodyElement.classList.contains('dark');
-            const textColorClass = isDark ? 'text-gray-100' : 'text-gray-900';
-            authEmailInput.classList.remove('text-gray-100', 'text-gray-900');
-            authPasswordInput.classList.remove('text-gray-100', 'text-gray-900');
-            authEmailInput.classList.add(textColorClass);
-            authPasswordInput.classList.add(textColorClass);
-
             
             if (mode === 'signin') {
                 authTitle.textContent = 'Sign In to Your Notes';
@@ -664,7 +717,7 @@
                 sharedViewerContainer.classList.remove('hidden');
                 const sharedId = hash.substring(9);
                 renderSharedNote(sharedId);
-                hideLoadingSpinner(); // Always hide spinner on shared route
+                hideLoadingSpinner(); 
                 return;
             } else {
                  sharedViewerContainer.classList.add('hidden');
@@ -705,13 +758,16 @@
 
         const getNotesCollectionRef = () => {
             if (!db || !userId) return null;
-            const path = `artifacts/${appId}/users/${userId}/notes`;
+            // Use projectId from config instead of __app_id placeholder outside canvas env
+            const effectiveAppId = firebaseConfig.projectId; 
+            const path = `artifacts/${effectiveAppId}/users/${userId}/notes`;
             return collection(db, path);
         };
         
         const getSharedCollectionRef = () => {
             if (!db) return null;
-            const path = `artifacts/${appId}/public/data/shared_notes`;
+            const effectiveAppId = firebaseConfig.projectId;
+            const path = `artifacts/${effectiveAppId}/public/data/shared_notes`;
             return collection(db, path);
         };
 
@@ -729,6 +785,7 @@
                 const newNotes = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data(),
+                    // Bug fix: ensure tags is always an array
                     tags: Array.isArray(doc.data().tags) ? doc.data().tags : [], 
                     updatedAt: doc.data().updatedAt?.toDate() || new Date(0)
                 }));
@@ -736,13 +793,14 @@
                 notesData = newNotes;
                 renderNoteList();
 
-                // If the active note was deleted by another client/device
+                // If the active note was deleted by another client/device, navigate home
                 if (activeNoteId && !notesData.find(note => note.id === activeNoteId)) {
                     window.location.hash = '#/';
                 }
                 
                 if (activeNoteId) {
-                    setActiveNote(activeNoteId);
+                    // Update editor content in case of external modification
+                    setActiveNote(activeNoteId); 
                 }
 
                 if (!isNotesLoaded) {
@@ -785,8 +843,8 @@
         const setSaveStatus = (status) => {
             saveStatus = status;
             let text = status;
-            let color = isDarkMode ? 'text-gray-400' : 'text-gray-400';
-
+            let color = 'text-gray-400'; // Default gray for dark/light mode
+            
             if (status === 'Typing...') {
                 text = 'Typing...';
                 color = isDarkMode ? 'text-gray-300' : 'text-gray-500';
@@ -835,6 +893,7 @@
                     await updateDoc(sharedDocRef, updatePayload);
                 }
                 
+                // Firestore listener will fire, but we set a temp status first
                 setSaveStatus('Saved');
             } catch (error) {
                 console.error("Error saving note:", error);
@@ -867,12 +926,15 @@
                 let sharedId = activeNote.sharedId;
 
                 if (activeNote.isShared && activeNote.sharedId) {
+                    // Update existing shared doc
                     const sharedDocRef = doc(sharedRef, activeNote.sharedId);
                     await updateDoc(sharedDocRef, baseData);
                 } else {
+                    // Create new shared doc
                     const sharedDocRef = await addDoc(sharedRef, baseData);
                     sharedId = sharedDocRef.id;
 
+                    // Update local doc with shared info
                     const noteDocRef = doc(notesRef, activeNoteId);
                     await updateDoc(noteDocRef, {
                         isShared: true,
@@ -880,13 +942,13 @@
                     });
                 }
                 
-                const shareUrl = `${window.location.origin}/#/shared/${sharedId}`;
+                const shareUrl = `${window.location.origin}${window.location.pathname}#/shared/${sharedId}`;
                 shareUrlInput.value = shareUrl;
                 shareModalOverlay.classList.remove('hidden');
                 shareModalOverlay.classList.add('flex');
                 
                 dynamicShareBtn.disabled = false;
-                setActiveNote(activeNoteId); // Re-render to update icon
+                // Listener will trigger setActiveNote and update button icon
             } catch (error) {
                 console.error("Error sharing note:", error);
                 showConfirmationModal({
@@ -912,9 +974,11 @@
             const sharedId = activeNote.sharedId;
 
             try {
+                // Delete the public copy
                 const sharedDocRef = doc(sharedRef, sharedId);
                 await deleteDoc(sharedDocRef);
                 
+                // Update the user's private copy
                 const noteDocRef = doc(notesRef, activeNoteId);
                 await updateDoc(noteDocRef, {
                     isShared: false,
@@ -922,8 +986,7 @@
                     updatedAt: serverTimestamp()
                 });
                 
-                setActiveNote(activeNoteId); // Re-render to update icon
-
+                // Listener will trigger setActiveNote and update button icon
             } catch (error) {
                 console.error("Error unsharing note:", error);
                  showConfirmationModal({
@@ -968,7 +1031,7 @@
             const isTagSearch = term.startsWith('#');
             const tagTerm = isTagSearch ? term.substring(1) : '';
 
-            // Update search input appearance based on search type
+            // Update search input appearance based on search type (NEW FEATURE ENHANCEMENT)
             if (isTagSearch && tagTerm) {
                 searchIcon.dataset.lucide = 'hash';
                 searchIcon.classList.remove('text-gray-400', 'text-indigo-500');
@@ -987,9 +1050,11 @@
                 if (isTagSearch && tagTerm) {
                     return note.tags?.some(tag => tag.includes(tagTerm)) || false;
                 } else {
+                    // Filter by title, content, OR tags
                     const titleMatch = note.title?.toLowerCase().includes(term);
                     const contentMatch = note.content?.toLowerCase().includes(term);
-                    return titleMatch || contentMatch;
+                    const tagMatch = note.tags?.some(tag => tag.includes(term)); // Check tags even if not starting with #
+                    return titleMatch || contentMatch || tagMatch;
                 }
             });
             
@@ -1007,10 +1072,12 @@
                 const isActive = note.id === activeNoteId;
                 const noteItem = document.createElement('a');
                 noteItem.href = `#/notes/${note.id}`;
+                // Fixed note list item styling for dark mode
                 noteItem.className = `p-4 mb-2 rounded-xl cursor-pointer block transition duration-150 ${isActive ? 'active bg-indigo-100 ring-2 ring-indigo-500 shadow-md' : 'bg-gray-50 hover:bg-gray-100'}`;
                 
+                // Refactored tag rendering (New Feature/Fix)
                 const tagsHtml = note.tags && note.tags.length > 0
-                    ? `<div class="mt-1 flex flex-wrap gap-1">${note.tags.map(tag => `<span class="text-[10px] bg-indigo-200 text-indigo-700 px-1.5 py-0.5 rounded-full font-medium">#${tag}</span>`).join('')}</div>`
+                    ? `<div class="mt-1 flex flex-wrap gap-1">${note.tags.map(tag => `<span class="tag-pill">#${tag}</span>`).join('')}</div>`
                     : '';
                 
                 const contentSnippet = stripMarkdown(note.content);
@@ -1055,10 +1122,12 @@
         const toggleSidebar = (force = null) => {
             isSidebarOpen = force !== null ? force : !isSidebarOpen;
             if (isSidebarOpen) {
+                // Show: full width on mobile, w-80 on desktop
                 notesListContainer.classList.remove('md:w-0', 'w-0', 'hidden');
                 notesListContainer.classList.add('md:w-80', 'w-full');
                 toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-close" class="w-5 h-5"></i>';
             } else {
+                // Hide: w-0 and hidden on both
                 notesListContainer.classList.add('md:w-0', 'w-0', 'hidden');
                 notesListContainer.classList.remove('md:w-80', 'w-full');
                 toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-open" class="w-5 h-5"></i>';
@@ -1095,13 +1164,14 @@
                 lastEditedTimeSpan.textContent = 'Last edited: ' + getRelativeTime(activeNote.updatedAt);
                 deleteNoteBtn.classList.remove('opacity-50', 'pointer-events-none');
                 
-                // Dynamic Share/Unshare Button (ICON FIX HERE)
+                // Dynamic Share/Unshare Button (BUG FIX: Icon & Color)
+                dynamicShareBtn.classList.remove('opacity-50', 'pointer-events-none');
+                dynamicShareBtn.classList.remove('text-green-600', 'hover:bg-green-50', 'text-red-600', 'hover:bg-red-50');
+                
                 if (activeNote.isShared) {
-                    // FIX: Use share-2 icon but make it red/orange and slightly rotated for unshare action
-                    dynamicShareBtn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5 transform rotate-12"></i>';
+                    // Unshare action (red color, rotated icon)
+                    dynamicShareBtn.innerHTML = '<i data-lucide="link-2-off" class="w-5 h-5"></i>'; // Using link-2-off for unshare
                     dynamicShareBtn.title = "Unshare Note (Delete Public Link)";
-                    dynamicShareBtn.classList.remove('text-green-600', 'hover:bg-green-50');
-                    // Use red color as requested
                     dynamicShareBtn.classList.add('text-red-600', 'hover:bg-red-50'); 
                     dynamicShareBtn.onclick = () => showConfirmationModal({
                         title: "Confirm Unshare",
@@ -1111,13 +1181,12 @@
                         onConfirm: unshareActiveNote
                     });
                 } else {
+                    // Share action (green color, standard icon)
                     dynamicShareBtn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5"></i>';
                     dynamicShareBtn.title = "Share Note (Create Public Link)";
-                    dynamicShareBtn.classList.remove('text-red-600', 'hover:bg-red-50');
                     dynamicShareBtn.classList.add('text-green-600', 'hover:bg-green-50');
                     dynamicShareBtn.onclick = shareActiveNote;
                 }
-                dynamicShareBtn.classList.remove('opacity-50', 'pointer-events-none');
 
                 setSaveStatus('Saved');
                 toggleMarkdownPreview(false);
@@ -1137,7 +1206,7 @@
                 if (isMobile) {
                     notesListContainer.classList.remove('hidden');
                     noteEditorContainer.classList.add('hidden');
-                    emptyEditorState.classList.add('hidden'); // Ensure empty state is hidden on mobile list view
+                    emptyEditorState.classList.add('hidden'); 
                     backToListBtn.classList.add('hidden');
                 } else {
                     notesListContainer.classList.remove('hidden');
@@ -1170,8 +1239,9 @@
                     
                     const timeString = note.updatedAt ? new Date(note.updatedAt.toDate()).toLocaleString() : 'N/A';
                     
+                    // Use new tag pill style
                     const tagsHtml = note.tags && note.tags.length > 0
-                        ? `<div class="mt-2 mb-4 flex flex-wrap gap-2">${note.tags.map(tag => `<span class="text-xs ${isDarkMode ? 'bg-gray-700 text-gray-200' : 'bg-gray-200 text-gray-700'} px-2 py-1 rounded-full font-medium">#${tag}</span>`).join('')}</div>`
+                        ? `<div class="mt-2 mb-4 flex flex-wrap gap-2">${note.tags.map(tag => `<span class="tag-pill text-xs px-2 py-1">${tag}</span>`).join('')}</div>`
                         : '';
                         
                     sharedMeta.innerHTML = `Shared by ${note.authorName || 'a user'} | Last updated: ${timeString} ${tagsHtml}`;
@@ -1225,6 +1295,11 @@
 
         const setupEventListeners = () => {
             window.addEventListener('hashchange', handleRouting);
+            window.addEventListener('resize', () => {
+                // Ensure correct state on window resize (especially for mobile/desktop transition)
+                handleRouting();
+                renderNoteList();
+            });
             
             // Dark Mode Toggle
             darkModeToggleBtn.addEventListener('click', toggleDarkMode);
@@ -1233,7 +1308,7 @@
             authPrimaryBtn.addEventListener('click', handlePrimaryAuthAction);
             authGoogleBtn.addEventListener('click', handleGoogleSignIn);
             
-            // Fix: Add event listeners to toggle links to handle hash change correctly
+            // Auth hash links (BUG FIX: using setAuthMode to ensure correct UI state)
             authToggleLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 const newHash = e.target.getAttribute('href');
@@ -1259,6 +1334,8 @@
             // App Events
             signoutBtn.addEventListener('click', handleSignOut);
             newNoteBtn.addEventListener('click', createNewNote);
+            
+            // Search Input (Tag Filtering Enhancement)
             searchInput.addEventListener('input', (e) => {
                 searchTerm = e.target.value;
                 renderNoteList();
@@ -1268,8 +1345,8 @@
             // Delete handler
             deleteNoteBtn.addEventListener('click', () => showConfirmationModal({
                 title: "Confirm Deletion",
-                message: "Are you sure you want to delete this note? This action cannot be undone.",
-                confirmText: "Delete",
+                message: "Are you sure you want to delete this note? This action cannot be undone and will also delete the public sharing link if one exists.",
+                confirmText: "Delete Permanently",
                 confirmClass: "bg-red-600 hover:bg-red-700",
                 onConfirm: async () => {
                      if (!activeNoteId || !userId) return;
@@ -1327,11 +1404,13 @@
                 shareModalOverlay.classList.add('hidden');
                 shareModalOverlay.classList.remove('flex');
             });
+            // Using execCommand for wider compatibility (GitHub Pages context)
             copyShareUrlBtn.addEventListener('click', () => {
                 shareUrlInput.select();
                 shareUrlInput.setSelectionRange(0, 99999); 
                 document.execCommand('copy');
-                copyShareUrlBtn.textContent = 'Copied!';
+                copyShareUrlBtn.innerHTML = '<i data-lucide="check" class="w-4 h-4 mr-2"></i> Copied!';
+                lucide.createIcons();
                 setTimeout(() => {
                     copyShareUrlBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4 mr-2"></i> Copy';
                     lucide.createIcons();
@@ -1339,7 +1418,7 @@
             });
 
 
-            // Mobile back button routes to list
+            // Mobile back button routes to list (Mobile UX Fix)
             backToListBtn.addEventListener('click', () => {
                 window.location.hash = '#/';
                 // Mobile UX Fix: Force hiding editor and showing list on mobile

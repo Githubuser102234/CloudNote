@@ -19,16 +19,30 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- Dark Mode Colors FIXES --- */
+        /* --- Dark Mode Colors FIXES (COMPREHENSIVE) --- */
         body.dark {
-            background-color: #0d1117; /* Even darker background (GitHub dark theme style) */
+            background-color: #0d1117; /* Base Background (GitHub dark theme style) */
             color: #c9d1d9; /* Light gray text */
         }
 
-        body.dark #note-list-container, body.dark #auth-overlay > div, body.dark #shared-viewer-container {
-            background-color: #161b22; /* Darker container background */
-            border-color: #30363d; /* Dark border */
+        /* Primary Containers (Sidebar, Modals, Shared Viewer, Auth Box) */
+        body.dark #note-list-container, 
+        body.dark #auth-overlay > div, 
+        body.dark #shared-viewer-container,
+        body.dark #modal-overlay > div, 
+        body.dark #share-modal-overlay > div,
+        body.dark #note-editor-container { /* Explicitly target editor */
+            background-color: #161b22; 
+            border-color: #30363d; 
             color: #c9d1d9;
+        }
+        
+        /* Editor Header and Footers (secondary BG) */
+        body.dark #note-editor-container > div:first-child,
+        body.dark #note-list-container > div:first-child,
+        body.dark #note-list-container > div:last-child {
+             background-color: #161b22; 
+             border-color: #30363d;
         }
         
         body.dark #auth-overlay {
@@ -36,7 +50,9 @@
         }
 
         /* Note list item default state */
-        body.dark .notes-list a:not(.active), body.dark #empty-editor-state {
+        body.dark .notes-list a:not(.active), 
+        body.dark #empty-editor-state,
+        body.dark #search-input {
             background-color: #161b22;
         }
         
@@ -46,19 +62,19 @@
 
         /* Active note contrast FIX */
         body.dark .notes-list a.active {
-            background-color: #4f46e520; /* indigo-600 with opacity */
+            background-color: #4f46e520; 
             box-shadow: 0 0 0 2px #4f46e5;
         }
         body.dark .notes-list a.active h3 {
-             color: #c7d2fe; /* indigo-200 */
+             color: #c7d2fe; 
         }
         body.dark .notes-list a.active p {
-             color: #9ca3af; /* gray-400 */
+             color: #9ca3af; 
         }
 
         /* General element color overrides for dark mode */
         body.dark .border-gray-200 { border-color: #30363d; }
-        body.dark .bg-gray-50 { background-color: #161b22; }
+        body.dark .bg-gray-50 { background-color: #161b22; } /* Corrected for editor header */
         body.dark .text-gray-900 { color: #f3f4f6; }
         body.dark .text-gray-700 { color: #c9d1d9; }
         body.dark .text-gray-600 { color: #9ca3af; }
@@ -66,21 +82,24 @@
         body.dark .text-gray-400 { color: #4b5563; }
         
         /* Input & Textarea FIX: Ensure full override */
-        body.dark input, body.dark textarea {
+        body.dark input, 
+        body.dark textarea {
             background-color: #161b22 !important; 
             border-color: #30363d !important; 
             color: #f3f4f6 !important; 
         }
-        body.dark input::placeholder, body.dark textarea::placeholder {
-            color: #6b7280; /* gray-500 */
+        body.dark input::placeholder, 
+        body.dark textarea::placeholder {
+            color: #6b7280; 
         }
-        body.dark input:focus, body.dark textarea:focus {
+        body.dark input:focus, 
+        body.dark textarea:focus {
             background-color: #161b22 !important;
         }
         
         /* Dark mode markdown styling */
         body.dark .markdown-viewer pre {
-            background-color: #0d1117; /* gray-900 */
+            background-color: #0d1117; 
             border: 1px solid #30363d;
         }
         body.dark .markdown-viewer code {
@@ -88,21 +107,14 @@
             color: #c9d1d9;
         }
         
-        /* Modal Fixes */
-        body.dark #modal-overlay > div, body.dark #share-modal-overlay > div {
-            background-color: #161b22; 
-            color: #f3f4f6;
-        }
-        body.dark #modal-title, body.dark #share-modal-overlay h3 {
-             color: #f3f4f6;
-        }
+        /* Share URL Input Fix */
         body.dark #share-url-input {
             background-color: #30363d !important;
             border-color: #4b5563 !important;
             color: #f3f4f6 !important;
         }
         
-        /* Tag Pill Styling FIX (New) */
+        /* Tag Pill Styling */
         .tag-pill {
             display: inline-flex;
             font-size: 10px;
@@ -110,32 +122,28 @@
             border-radius: 9999px;
             font-weight: 500;
             margin-right: 4px;
-            background-color: #e0e7ff; /* light: indigo-100 */
-            color: #4f46e5; /* light: indigo-600 */
+            background-color: #e0e7ff; 
+            color: #4f46e5; 
         }
         body.dark .tag-pill {
-            background-color: #374151; /* dark: gray-700 */
-            color: #c7d2fe; /* dark: indigo-200 */
+            background-color: #374151; 
+            color: #c7d2fe; 
         }
 
         /* Custom scrollbar for better aesthetics */
         .notes-list::-webkit-scrollbar, .editor-content::-webkit-scrollbar, .markdown-viewer::-webkit-scrollbar {
             width: 6px;
         }
-
         .notes-list::-webkit-scrollbar-thumb, .editor-content::-webkit-scrollbar-thumb, .markdown-viewer::-webkit-scrollbar-thumb {
             background: #d1d5db;
             border-radius: 3px;
         }
-
         .notes-list::-webkit-scrollbar-thumb:hover, .editor-content::-webkit-scrollbar-thumb:hover, .markdown-viewer::-webkit-scrollbar-thumb:hover {
             background: #9ca3af;
         }
-
         body.dark .notes-list::-webkit-scrollbar-thumb, body.dark .editor-content::-webkit-scrollbar-thumb, body.dark .markdown-viewer::-webkit-scrollbar-thumb {
             background: #4b5563;
         }
-        
         body.dark .notes-list::-webkit-scrollbar-thumb:hover, body.dark .editor-content::-webkit-scrollbar-thumb:hover, body.dark .markdown-viewer::-webkit-scrollbar-thumb:hover {
             background: #6b7280;
         }
@@ -169,7 +177,7 @@
         
         /* Ensure editor content takes full available height */
         #note-content {
-            min-height: calc(100% - 150px); /* Adjust based on title/tag input height */
+            min-height: calc(100% - 150px); 
         }
     </style>
 </head>
@@ -190,7 +198,6 @@
             
             <div id="auth-message" class="text-sm text-center text-red-500 mb-4 hidden"></div>
 
-            <!-- Inputs will inherit dark mode color via global CSS rules -->
             <input id="auth-email" type="email" placeholder="Email" class="w-full mb-3 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
             <input id="auth-password" type="password" placeholder="Password" class="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
 
@@ -227,11 +234,14 @@
     <div id="shared-viewer-container" class="fixed inset-0 bg-white z-[150] hidden flex-col">
         <div id="shared-viewer-content" class="flex-1 overflow-y-auto p-6 md:p-12 max-w-4xl mx-auto w-full">
             <h1 id="shared-title" class="text-4xl font-extrabold text-gray-900 mb-4"></h1>
-            <p id="shared-meta" class="text-sm text-gray-500 border-b pb-4 mb-8"></p>
+            <div id="shared-meta" class="text-sm text-gray-500 border-b pb-4 mb-8"></div>
             <div id="shared-markdown-content" class="markdown-viewer text-gray-700"></div>
         </div>
-        <div class="p-4 border-t border-gray-200 text-center bg-gray-50">
-            <a href="#/" class="text-indigo-600 hover:text-indigo-800 font-medium">Go back to My Notes App</a>
+        <div class="p-4 border-t border-gray-200 text-center bg-gray-50 flex flex-col md:flex-row md:justify-center md:space-x-4">
+             <button id="shared-edit-btn" class="hidden py-2 px-4 mb-2 md:mb-0 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition duration-150 active:scale-[.99]">
+                <i data-lucide="file-pen" class="w-4 h-4 mr-1 inline-block"></i> Edit My Note
+            </button>
+            <a href="#/" class="py-2 px-4 text-indigo-600 hover:text-indigo-800 font-medium">Go back to My Notes App</a>
         </div>
     </div>
     
@@ -239,12 +249,11 @@
     <div id="app" class="flex flex-1 overflow-hidden h-screen hidden">
         
         <!-- Note List (Sidebar) -->
-        <!-- Responsive layout: w-full on mobile, fixed w-80 on desktop/tablet -->
-        <div id="note-list-container" class="w-full md:w-80 border-r border-gray-200 bg-white flex flex-col transition-transform duration-300 ease-in-out md:static absolute inset-0 z-10">
+        <div id="note-list-container" class="w-full md:w-80 border-r border-gray-200 bg-white flex flex-col transition-transform duration-300 ease-in-out absolute inset-0 z-10 md:static">
             <div class="p-4 border-b border-gray-200 shadow-sm flex justify-between items-center bg-white">
                 <h1 class="text-2xl font-bold text-gray-900">My Notes</h1>
                 <div class="flex space-x-2 items-center">
-                    <!-- Dark Mode Toggle (Fixed in place) -->
+                    <!-- Dark Mode Toggle -->
                     <button id="dark-mode-toggle" title="Toggle Dark Mode" class="p-2 text-gray-500 rounded-full hover:bg-gray-100 transition duration-150 active:scale-95">
                         <i data-lucide="sun" class="w-5 h-5"></i>
                     </button>
@@ -261,7 +270,7 @@
             <div class="p-4 border-b border-gray-100 bg-white">
                  <div class="relative">
                     <i id="search-icon" data-lucide="search" class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input id="search-input" type="text" placeholder="Search notes or #tag..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-700">
+                    <input id="search-input" type="text" placeholder="Search notes, content, or #tag..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-700">
                 </div>
             </div>
 
@@ -275,8 +284,8 @@
         </div>
 
         <!-- Note Editor -->
-        <div id="note-editor-container" class="flex-1 flex-col bg-white md:flex hidden">
-            <!-- Editor Header (Sticky for mobile UX) -->
+        <div id="note-editor-container" class="flex-1 flex-col bg-white hidden md:flex">
+            <!-- Editor Header (Sticky) -->
             <div class="sticky top-0 z-10 p-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 shadow-md">
                 <div class="flex items-center space-x-3">
                     <!-- Back to list button (Mobile only) -->
@@ -319,7 +328,6 @@
                 <input id="note-tags-input" type="text" placeholder="Tags (e.g., work, project, #idea) - Max 10" class="w-full text-sm border-none focus:ring-0 focus:outline-none placeholder-gray-400 p-0 text-gray-500 border-b pb-2 bg-transparent">
 
                 <!-- Raw Markdown Textarea (Default View) -->
-                <!-- Use h-full to ensure it takes remaining space, flex-1 in container handles scroll -->
                 <textarea id="note-content" placeholder="Start typing here... supports **Markdown**!" class="editor-content w-full flex-1 text-lg border-none focus:ring-0 focus:outline-none resize-none placeholder-gray-400 p-0 text-gray-700 bg-transparent"></textarea>
 
                 <!-- Markdown Preview Div (Hidden by Default) -->
@@ -328,7 +336,7 @@
         </div>
 
         <!-- Empty State for Editor -->
-        <div id="empty-editor-state" class="flex-1 flex-col items-center justify-center text-gray-400 p-6 md:flex hidden">
+        <div id="empty-editor-state" class="flex-1 flex-col items-center justify-center text-gray-400 p-6 hidden md:flex">
             <i data-lucide="notebook-pen" class="w-16 h-16 mb-4"></i>
             <p class="text-xl font-medium">Select a note or create a new one</p>
         </div>
@@ -352,7 +360,7 @@
             <h3 class="text-xl font-semibold text-gray-800 mb-3 flex items-center">
                 <i data-lucide="link" class="w-5 h-5 mr-2 text-indigo-500"></i> Note Shared Successfully
             </h3>
-            <p class="text-gray-600 mb-4">Copy the link below to share this note as a read-only page.</p>
+            <p class="text-gray-600 mb-4">Copy the link below to share this note as a read-only page. Any changes you make will update this link instantly.</p>
             <div class="flex space-x-2">
                 <input id="share-url-input" type="text" readonly class="flex-1 p-3 border border-gray-300 rounded-lg bg-gray-50 text-sm truncate text-gray-900">
                 <button id="copy-share-url-btn" class="px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150 flex items-center">
@@ -408,7 +416,7 @@
         let searchTerm = '';
         let saveStatus = 'Saved';
         let isMarkdownPreview = false;
-        let isSidebarOpen = true; 
+        let isSidebarOpen = true; // Default state for desktop
 
         // --- DOM Elements ---
         const bodyElement = document.body;
@@ -451,6 +459,7 @@
         const sharedTitle = document.getElementById('shared-title');
         const sharedMeta = document.getElementById('shared-meta');
         const sharedMarkdownContent = document.getElementById('shared-markdown-content');
+        const sharedEditBtn = document.getElementById('shared-edit-btn');
 
         // Auth Form Elements
         const authTitle = document.getElementById('auth-title');
@@ -465,6 +474,8 @@
 
         // --- UTILITY & LOADING CONTROL ---
         
+        const isMobileView = () => window.innerWidth < 768;
+
         const hideLoadingSpinner = () => {
             if (isAuthReady && (isNotesLoaded || window.location.hash.startsWith('#/shared/'))) {
                 loadingSpinnerOverlay.classList.add('hidden');
@@ -499,7 +510,6 @@
 
         // --- DARK MODE LOGIC (Theme Persistence Fix) ---
         const initializeDarkMode = () => {
-            // 1. Check local storage preference
             const savedMode = localStorage.getItem('notesAppDarkMode');
             
             if (savedMode === 'true') {
@@ -507,15 +517,14 @@
             } else if (savedMode === 'false') {
                 isDarkMode = false;
             } else {
-                // 2. Fallback to system preference
                 isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
             }
             
-            // 3. Apply immediately before rendering content
             applyDarkMode(isDarkMode);
-            // Hide the spinner background now that we know the initial theme
-            loadingSpinnerOverlay.classList.remove('bg-gray-50', 'dark:bg-[#111827]');
-            loadingSpinnerOverlay.classList.add(isDarkMode ? 'bg-[#111827]' : 'bg-gray-50');
+            // Ensure spinner background matches the theme
+            const loadingBgClass = isDarkMode ? 'bg-[#111827]' : 'bg-gray-50';
+            loadingSpinnerOverlay.classList.remove('bg-gray-50');
+            loadingSpinnerOverlay.classList.add(loadingBgClass);
         };
 
         const applyDarkMode = (enabled) => {
@@ -529,11 +538,10 @@
                 darkModeToggleBtn.innerHTML = '<i data-lucide="sun" class="w-5 h-5"></i>';
                 darkModeToggleBtn.title = "Toggle Dark Mode";
             }
-            // Save preference to local storage
             localStorage.setItem('notesAppDarkMode', isDarkMode);
             lucide.createIcons();
-            // Re-render note list to fix styles
             if(userId) renderNoteList();
+            if(activeNoteId) setActiveNote(activeNoteId, false); // Re-render editor styles
         };
 
         const toggleDarkMode = () => {
@@ -643,6 +651,7 @@
                 } else if (authMode === 'signup') {
                     await createUserWithEmailAndPassword(auth, email, password);
                 } else if (authMode === 'reset') {
+                    if (!email) throw new Error('Email is required for password reset.');
                     await sendPasswordResetEmail(auth, email);
                     setAuthMessage('Password reset email sent! Check your inbox.', false);
                     authPrimaryBtn.textContent = btnText;
@@ -658,8 +667,13 @@
                         case 'auth/wrong-password': message = 'Invalid password.'; break;
                         case 'auth/email-already-in-use': message = 'Email already in use.'; break;
                         case 'auth/weak-password': message = 'Password should be at least 6 characters.'; break;
+                        case 'auth/missing-email': 
+                        case 'auth/invalid-credential': 
+                            message = 'Email and password are required.'; break;
                         default: message = `Error: ${error.message}`;
                     }
+                } else {
+                    message = error.message;
                 }
                 setAuthMessage(message);
                 authPrimaryBtn.textContent = btnText;
@@ -729,11 +743,25 @@
                 authOverlay.classList.add('hidden');
                 appContainer.classList.remove('hidden');
                 
-                if (hash.startsWith('#/notes/')) {
+                const isNoteRoute = hash.startsWith('#/notes/');
+                
+                if (isNoteRoute) {
                     const noteId = hash.substring(8);
                     setActiveNote(noteId); 
+                    // Mobile UX: If note selected, hide sidebar
+                    if (isMobileView()) {
+                        notesListContainer.classList.add('hidden');
+                        noteEditorContainer.classList.remove('hidden', 'md:hidden');
+                        noteEditorContainer.classList.add('flex');
+                    }
                 } else {
                     setActiveNote(null); 
+                    // Mobile UX: Show sidebar, hide editor
+                    if (isMobileView()) {
+                        notesListContainer.classList.remove('hidden');
+                        noteEditorContainer.classList.add('hidden');
+                        emptyEditorState.classList.add('hidden');
+                    }
                 }
 
             } else {
@@ -752,14 +780,15 @@
             }
             
             hideLoadingSpinner(); 
+            lucide.createIcons();
         };
 
         // --- FIRESTORE OPERATIONS ---
 
         const getNotesCollectionRef = () => {
             if (!db || !userId) return null;
-            // Use projectId from config instead of __app_id placeholder outside canvas env
             const effectiveAppId = firebaseConfig.projectId; 
+            // Private Data Path
             const path = `artifacts/${effectiveAppId}/users/${userId}/notes`;
             return collection(db, path);
         };
@@ -767,6 +796,7 @@
         const getSharedCollectionRef = () => {
             if (!db) return null;
             const effectiveAppId = firebaseConfig.projectId;
+            // Public Data Path
             const path = `artifacts/${effectiveAppId}/public/data/shared_notes`;
             return collection(db, path);
         };
@@ -787,22 +817,25 @@
                     ...doc.data(),
                     // Bug fix: ensure tags is always an array
                     tags: Array.isArray(doc.data().tags) ? doc.data().tags : [], 
+                    // Use a safe date parsing
                     updatedAt: doc.data().updatedAt?.toDate() || new Date(0)
                 }));
 
                 notesData = newNotes;
                 renderNoteList();
 
-                // If the active note was deleted by another client/device, navigate home
-                if (activeNoteId && !notesData.find(note => note.id === activeNoteId)) {
-                    window.location.hash = '#/';
+                // Check active note status
+                if (activeNoteId) {
+                    const updatedNote = notesData.find(note => note.id === activeNoteId);
+                    if (!updatedNote) {
+                        // Active note was deleted
+                        window.location.hash = '#/';
+                    } else {
+                        // Update editor content in case of external modification
+                        setActiveNote(activeNoteId, false); 
+                    }
                 }
                 
-                if (activeNoteId) {
-                    // Update editor content in case of external modification
-                    setActiveNote(activeNoteId); 
-                }
-
                 if (!isNotesLoaded) {
                     isNotesLoaded = true;
                     hideLoadingSpinner();
@@ -843,7 +876,7 @@
         const setSaveStatus = (status) => {
             saveStatus = status;
             let text = status;
-            let color = 'text-gray-400'; // Default gray for dark/light mode
+            let color = isDarkMode ? 'text-gray-400' : 'text-gray-500'; // Default gray for dark/light mode
             
             if (status === 'Typing...') {
                 text = 'Typing...';
@@ -872,6 +905,16 @@
             const activeNote = notesData.find(note => note.id === activeNoteId);
             const isShared = activeNote?.isShared === true;
             const newTagsArray = parseTags(tagsString);
+            
+            const initialTitle = activeNote.title || '';
+            const initialContent = activeNote.content || '';
+            const initialTags = tagsArrayToString(activeNote.tags);
+            
+            // Check if content actually changed before saving
+            if (title === initialTitle && content === initialContent && tagsString === initialTags) {
+                 setSaveStatus('Saved');
+                 return;
+            }
 
             try {
                 setSaveStatus('Saving...');
@@ -893,8 +936,7 @@
                     await updateDoc(sharedDocRef, updatePayload);
                 }
                 
-                // Firestore listener will fire, but we set a temp status first
-                setSaveStatus('Saved');
+                // Firestore listener will fire and handle setting 'Saved' status and updating time
             } catch (error) {
                 console.error("Error saving note:", error);
                 setSaveStatus('Error!');
@@ -919,7 +961,7 @@
                     content: activeNote.content || '',
                     tags: activeNote.tags || [],
                     authorId: userId, 
-                    authorName: auth.currentUser?.email || 'Anonymous',
+                    authorName: auth.currentUser?.email || 'Anonymous User',
                     updatedAt: serverTimestamp(),
                 };
 
@@ -928,7 +970,7 @@
                 if (activeNote.isShared && activeNote.sharedId) {
                     // Update existing shared doc
                     const sharedDocRef = doc(sharedRef, activeNote.sharedId);
-                    await updateDoc(sharedDocRef, baseData);
+                    await setDoc(sharedDocRef, baseData, { merge: true }); // Use setDoc with merge to ensure doc exists
                 } else {
                     // Create new shared doc
                     const sharedDocRef = await addDoc(sharedRef, baseData);
@@ -1004,6 +1046,7 @@
         // --- UI RENDERING & DISPLAY ---
         
         const renderMarkdown = (markdownText) => {
+            // marked is synchronous by default
             return marked.parse(markdownText || '');
         }
 
@@ -1031,7 +1074,7 @@
             const isTagSearch = term.startsWith('#');
             const tagTerm = isTagSearch ? term.substring(1) : '';
 
-            // Update search input appearance based on search type (NEW FEATURE ENHANCEMENT)
+            // Update search input appearance based on search type
             if (isTagSearch && tagTerm) {
                 searchIcon.dataset.lucide = 'hash';
                 searchIcon.classList.remove('text-gray-400', 'text-indigo-500');
@@ -1053,7 +1096,7 @@
                     // Filter by title, content, OR tags
                     const titleMatch = note.title?.toLowerCase().includes(term);
                     const contentMatch = note.content?.toLowerCase().includes(term);
-                    const tagMatch = note.tags?.some(tag => tag.includes(term)); // Check tags even if not starting with #
+                    const tagMatch = note.tags?.some(tag => tag.includes(term)); 
                     return titleMatch || contentMatch || tagMatch;
                 }
             });
@@ -1072,10 +1115,17 @@
                 const isActive = note.id === activeNoteId;
                 const noteItem = document.createElement('a');
                 noteItem.href = `#/notes/${note.id}`;
-                // Fixed note list item styling for dark mode
-                noteItem.className = `p-4 mb-2 rounded-xl cursor-pointer block transition duration-150 ${isActive ? 'active bg-indigo-100 ring-2 ring-indigo-500 shadow-md' : 'bg-gray-50 hover:bg-gray-100'}`;
                 
-                // Refactored tag rendering (New Feature/Fix)
+                // Use isDarkMode to correctly set hover/background for list items
+                const itemClasses = isActive 
+                    ? 'active bg-indigo-100 ring-2 ring-indigo-500 shadow-md' 
+                    : isDarkMode 
+                        ? 'bg-[#161b22] hover:bg-[#30363d]' 
+                        : 'bg-gray-50 hover:bg-gray-100';
+
+                noteItem.className = `p-4 mb-2 rounded-xl cursor-pointer block transition duration-150 ${itemClasses}`;
+                
+                // Refactored tag rendering 
                 const tagsHtml = note.tags && note.tags.length > 0
                     ? `<div class="mt-1 flex flex-wrap gap-1">${note.tags.map(tag => `<span class="tag-pill">#${tag}</span>`).join('')}</div>`
                     : '';
@@ -1096,9 +1146,6 @@
             lucide.createIcons();
         };
         
-        const updateMarkdownView = (content) => {
-            markdownPreviewDiv.innerHTML = renderMarkdown(content);
-        };
 
         const toggleMarkdownPreview = (force = null) => {
             isMarkdownPreview = force !== null ? force : !isMarkdownPreview;
@@ -1122,13 +1169,13 @@
         const toggleSidebar = (force = null) => {
             isSidebarOpen = force !== null ? force : !isSidebarOpen;
             if (isSidebarOpen) {
-                // Show: full width on mobile, w-80 on desktop
+                // Show: full width on mobile (if needed, but handled by routing) or w-80 on desktop
                 notesListContainer.classList.remove('md:w-0', 'w-0', 'hidden');
                 notesListContainer.classList.add('md:w-80', 'w-full');
                 toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-close" class="w-5 h-5"></i>';
             } else {
-                // Hide: w-0 and hidden on both
-                notesListContainer.classList.add('md:w-0', 'w-0', 'hidden');
+                // Hide: w-0 on desktop
+                notesListContainer.classList.add('md:w-0', 'w-0');
                 notesListContainer.classList.remove('md:w-80', 'w-full');
                 toggleSidebarBtn.innerHTML = '<i data-lucide="panel-left-open" class="w-5 h-5"></i>';
             }
@@ -1136,46 +1183,39 @@
         };
 
 
-        const setActiveNote = (noteId) => {
+        const setActiveNote = (noteId, focus = true) => {
             activeNoteId = noteId;
             const activeNote = notesData.find(note => note.id === noteId);
-
-            const isMobile = window.innerWidth < 768;
 
             if (activeNote) {
                 // UI Setup
                 document.title = (activeNote.title || 'Untitled') + ' | Notes';
-                noteEditorContainer.classList.remove('hidden');
+                noteEditorContainer.classList.remove('hidden', 'md:hidden');
                 noteEditorContainer.classList.add('flex');
                 emptyEditorState.classList.add('hidden');
-                
-                // Mobile UX Fix: Hide list and show back button
-                if (isMobile) {
-                    notesListContainer.classList.add('hidden');
-                    backToListBtn.classList.remove('hidden');
-                } else {
-                    backToListBtn.classList.add('hidden');
-                }
+                backToListBtn.classList.toggle('hidden', !isMobileView());
 
                 // Data Population
                 noteTitleInput.value = activeNote.title || '';
                 noteTagsInput.value = tagsArrayToString(activeNote.tags);
                 noteContentTextarea.value = activeNote.content || '';
-                lastEditedTimeSpan.textContent = 'Last edited: ' + getRelativeTime(activeNote.updatedAt);
+                
+                // Bug Fix: Use activeNote's timestamp to update the UI immediately
+                lastEditedTimeSpan.textContent = 'Last edited: ' + getRelativeTime(activeNote.updatedAt); 
+
                 deleteNoteBtn.classList.remove('opacity-50', 'pointer-events-none');
                 
-                // Dynamic Share/Unshare Button (BUG FIX: Icon & Color)
-                dynamicShareBtn.classList.remove('opacity-50', 'pointer-events-none');
-                dynamicShareBtn.classList.remove('text-green-600', 'hover:bg-green-50', 'text-red-600', 'hover:bg-red-50');
+                // Dynamic Share/Unshare Button Logic
+                dynamicShareBtn.classList.remove('opacity-50', 'pointer-events-none', 'text-green-600', 'hover:bg-green-50', 'text-red-600', 'hover:bg-red-50');
                 
                 if (activeNote.isShared) {
                     // Unshare action (red color, rotated icon)
-                    dynamicShareBtn.innerHTML = '<i data-lucide="link-2-off" class="w-5 h-5"></i>'; // Using link-2-off for unshare
+                    dynamicShareBtn.innerHTML = '<i data-lucide="link-2-off" class="w-5 h-5"></i>'; 
                     dynamicShareBtn.title = "Unshare Note (Delete Public Link)";
                     dynamicShareBtn.classList.add('text-red-600', 'hover:bg-red-50'); 
                     dynamicShareBtn.onclick = () => showConfirmationModal({
                         title: "Confirm Unshare",
-                        message: "Are you sure you want to unshare this note? The public link will stop working immediately, and the read-only copy will be permanently deleted.",
+                        message: "Are you sure you want to unshare this note? The public link will stop working immediately.",
                         confirmText: "Unshare",
                         confirmClass: "bg-red-600 hover:bg-red-700",
                         onConfirm: unshareActiveNote
@@ -1190,10 +1230,12 @@
 
                 setSaveStatus('Saved');
                 toggleMarkdownPreview(false);
-                noteTitleInput.focus();
+                if (focus) {
+                    noteTitleInput.focus();
+                }
 
             } else {
-                // Clear and hide editor
+                // Clear and hide editor (Note: Mobile routing handles the hidden/shown state of list/editor)
                 noteTitleInput.value = '';
                 noteTagsInput.value = '';
                 noteContentTextarea.value = '';
@@ -1202,14 +1244,8 @@
                 dynamicShareBtn.classList.add('opacity-50', 'pointer-events-none');
                 setSaveStatus('');
                 
-                // Mobile UX Fix: Show list, hide editor view
-                if (isMobile) {
-                    notesListContainer.classList.remove('hidden');
-                    noteEditorContainer.classList.add('hidden');
-                    emptyEditorState.classList.add('hidden'); 
-                    backToListBtn.classList.add('hidden');
-                } else {
-                    notesListContainer.classList.remove('hidden');
+                // Show Empty State on Desktop/Tablet
+                if (!isMobileView()) {
                     noteEditorContainer.classList.add('hidden');
                     emptyEditorState.classList.remove('hidden');
                 }
@@ -1225,8 +1261,9 @@
             const sharedDocRef = doc(sharedRef, sharedId);
             
             sharedTitle.textContent = 'Loading Note...';
-            sharedMeta.textContent = '';
+            sharedMeta.innerHTML = '';
             sharedMarkdownContent.innerHTML = '';
+            sharedEditBtn.classList.add('hidden');
             
             try {
                 const docSnap = await getDoc(sharedDocRef);
@@ -1239,26 +1276,53 @@
                     
                     const timeString = note.updatedAt ? new Date(note.updatedAt.toDate()).toLocaleString() : 'N/A';
                     
-                    // Use new tag pill style
+                    // Tag rendering (Bug Fix: ensure tags are styled correctly in the viewer)
                     const tagsHtml = note.tags && note.tags.length > 0
-                        ? `<div class="mt-2 mb-4 flex flex-wrap gap-2">${note.tags.map(tag => `<span class="tag-pill text-xs px-2 py-1">${tag}</span>`).join('')}</div>`
+                        ? `<div class="mt-2 flex flex-wrap gap-2">${note.tags.map(tag => `<span class="tag-pill text-xs px-2 py-1">#${tag}</span>`).join('')}</div>`
                         : '';
                         
-                    sharedMeta.innerHTML = `Shared by ${note.authorName || 'a user'} | Last updated: ${timeString} ${tagsHtml}`;
+                    sharedMeta.innerHTML = `
+                        <p>Shared by <strong>${note.authorName || 'a user'}</strong> | Last updated: ${timeString}</p>
+                        ${tagsHtml}
+                    `;
                     
                     sharedMarkdownContent.innerHTML = renderMarkdown(note.content || '');
+                    
+                    // Feature: Allow the author to go straight to edit view
+                    if (note.authorId === userId) {
+                        sharedEditBtn.classList.remove('hidden');
+                        // Find the note's ID from the current user's notes collection 
+                        const userNotesRef = getNotesCollectionRef();
+                        const q = query(userNotesRef);
+                        const userNotesSnapshot = await getDocs(q);
+                        
+                        const originalNoteDoc = userNotesSnapshot.docs.find(d => d.data().sharedId === sharedId);
+
+                        if (originalNoteDoc) {
+                             sharedEditBtn.onclick = () => {
+                                window.location.hash = `#/notes/${originalNoteDoc.id}`;
+                             };
+                        } else {
+                            // Should not happen if data is consistent, but handles edge case
+                            sharedEditBtn.classList.add('hidden');
+                        }
+                    } else {
+                        sharedEditBtn.classList.add('hidden');
+                    }
+
                 } else {
                     sharedTitle.textContent = 'Note Not Found (404)';
-                    sharedMeta.textContent = 'The shared note link is invalid or the note has been deleted by the owner.';
+                    sharedMeta.innerHTML = 'The shared note link is invalid or the note has been deleted by the owner.';
                     sharedMarkdownContent.innerHTML = '';
                 }
             } catch (error) {
                 console.error("Error loading shared note:", error);
                 sharedTitle.textContent = 'An Error Occurred';
-                sharedMeta.textContent = 'Could not load note due to a connection error.';
+                sharedMeta.innerHTML = 'Could not load note due to a connection error.';
                 sharedMarkdownContent.innerHTML = `<p class="text-red-500">${error.message}</p>`;
             } finally {
                 hideLoadingSpinner();
+                lucide.createIcons();
             }
         };
 
@@ -1273,11 +1337,7 @@
             
             modalConfirmBtn.className = "px-4 py-2 text-white rounded-lg transition duration-150 " + (confirmClass || "bg-red-600 hover:bg-red-700");
             
-            if (showCancel) {
-                modalCancelBtn.classList.remove('hidden');
-            } else {
-                modalCancelBtn.classList.add('hidden');
-            }
+            modalCancelBtn.classList.toggle('hidden', !showCancel);
 
             currentModalAction = onConfirm;
 
@@ -1295,11 +1355,7 @@
 
         const setupEventListeners = () => {
             window.addEventListener('hashchange', handleRouting);
-            window.addEventListener('resize', () => {
-                // Ensure correct state on window resize (especially for mobile/desktop transition)
-                handleRouting();
-                renderNoteList();
-            });
+            window.addEventListener('resize', handleRouting); // Use routing for responsiveness
             
             // Dark Mode Toggle
             darkModeToggleBtn.addEventListener('click', toggleDarkMode);
@@ -1308,17 +1364,15 @@
             authPrimaryBtn.addEventListener('click', handlePrimaryAuthAction);
             authGoogleBtn.addEventListener('click', handleGoogleSignIn);
             
-            // Auth hash links (BUG FIX: using setAuthMode to ensure correct UI state)
+            // Auth hash links (FIXED to prevent page reload)
             authToggleLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 const newHash = e.target.getAttribute('href');
                 window.location.hash = newHash;
-                setAuthMode(newHash.substring(2));
             });
             authResetLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 window.location.hash = e.target.getAttribute('href');
-                setAuthMode('reset');
             });
 
 
@@ -1335,7 +1389,7 @@
             signoutBtn.addEventListener('click', handleSignOut);
             newNoteBtn.addEventListener('click', createNewNote);
             
-            // Search Input (Tag Filtering Enhancement)
+            // Search Input 
             searchInput.addEventListener('input', (e) => {
                 searchTerm = e.target.value;
                 renderNoteList();
@@ -1418,14 +1472,9 @@
             });
 
 
-            // Mobile back button routes to list (Mobile UX Fix)
+            // Mobile back button routes to list 
             backToListBtn.addEventListener('click', () => {
                 window.location.hash = '#/';
-                // Mobile UX Fix: Force hiding editor and showing list on mobile
-                if (window.innerWidth < 768) {
-                    noteEditorContainer.classList.add('hidden');
-                    notesListContainer.classList.remove('hidden');
-                }
             });
         };
 
@@ -1433,8 +1482,9 @@
         // --- APPLICATION START ---
 
         document.addEventListener('DOMContentLoaded', () => {
-            initializeDarkMode(); // Initialize dark mode first
+            initializeDarkMode(); 
             
+            // Set initial hash if none exists to trigger routing logic
             if (!window.location.hash) {
                 window.location.hash = '#/';
             }
@@ -1447,4 +1497,3 @@
     </script>
 </body>
 </html>
-

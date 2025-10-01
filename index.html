@@ -375,9 +375,10 @@
     <!-- Firebase Imports and Logic -->
     <script type="module">
         // Import Firebase SDKs
+        // FIX: Added getDocs import here
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp, setLogLevel, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, collection, query, onSnapshot, addDoc, updateDoc, deleteDoc, serverTimestamp, setLogLevel, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- GLOBAL SETUP ---
 
@@ -1050,6 +1051,13 @@
             return marked.parse(markdownText || '');
         }
 
+        // FIX: Added missing updateMarkdownView function
+        const updateMarkdownView = (content) => {
+            if (isMarkdownPreview) {
+                 markdownPreviewDiv.innerHTML = renderMarkdown(content);
+            }
+        };
+
         const getRelativeTime = (date) => {
             if (!date || date.getTime() === 0) return 'Never';
             const seconds = Math.floor((new Date() - date) / 1000);
@@ -1155,7 +1163,8 @@
                 markdownPreviewDiv.classList.remove('hidden');
                 markdownToggleBtn.innerHTML = '<i data-lucide="file-pen" class="w-5 h-5"></i>';
                 markdownToggleBtn.title = "Toggle Editing Mode";
-                updateMarkdownView(noteContentTextarea.value);
+                // FIX: Explicitly update the view when entering preview mode
+                updateMarkdownView(noteContentTextarea.value); 
             } else {
                 noteContentTextarea.classList.remove('hidden');
                 markdownPreviewDiv.classList.add('hidden');
@@ -1294,7 +1303,9 @@
                         // Find the note's ID from the current user's notes collection 
                         const userNotesRef = getNotesCollectionRef();
                         const q = query(userNotesRef);
-                        const userNotesSnapshot = await getDocs(q);
+                        
+                        // FIX: getDocs is now correctly imported
+                        const userNotesSnapshot = await getDocs(q); 
                         
                         const originalNoteDoc = userNotesSnapshot.docs.find(d => d.data().sharedId === sharedId);
 
@@ -1441,6 +1452,7 @@
                 }, 1000);
                 
                 if (isMarkdownPreview) {
+                    // Update markdown view in real-time if preview is active
                     updateMarkdownView(content);
                 }
             };
